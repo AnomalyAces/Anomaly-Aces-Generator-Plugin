@@ -1,0 +1,2852 @@
+[gd_scene load_steps=10 format=3 uid="uid://c2qm6ekmqnc5s"]
+
+[ext_resource type="Script" path="res://Generator/RoomGenerator/room_generator.gd" id="1_jh77p"]
+[ext_resource type="MeshLibrary" uid="uid://dikdiycg6a7ot" path="res://Generator/MeshLibrary/GeneratorCell/GeneratorTiles.tres" id="2_o4f8d"]
+[ext_resource type="Script" path="res://Generator/RoomGenerator/room_mesh.gd" id="3_mualt"]
+[ext_resource type="PackedScene" uid="uid://csn7brnf4x5gy" path="res://Generator/MeshLibrary/GeneratorCell/GeneratorCell.tscn" id="4_3lyah"]
+[ext_resource type="Script" path="res://Generator/MeshLibrary/GeneratorCell/generator_cell.gd" id="5_hp26e"]
+[ext_resource type="PackedScene" uid="uid://b1v6ubve7frus" path="res://Characters/Demo/DemoCharacter.tscn" id="6_p6rsa"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hwul0"]
+sky_top_color = Color(0.0491508, 0.0667203, 0.438902, 1)
+sky_horizon_color = Color(0.729599, 0.563422, 0.757969, 1)
+ground_bottom_color = Color(0.183594, 0.183594, 0.183594, 1)
+
+[sub_resource type="Sky" id="Sky_e0w55"]
+sky_material = SubResource("ProceduralSkyMaterial_hwul0")
+
+[sub_resource type="Environment" id="Environment_bj41a"]
+background_mode = 2
+sky = SubResource("Sky_e0w55")
+
+[node name="RoomGenerator" type="Node3D"]
+script = ExtResource("1_jh77p")
+number_of_rooms = 20
+min_room_size = 4
+max_room_size = 10
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_bj41a")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 8, 5, 14)
+light_angular_distance = 41.82
+
+[node name="GridMap" type="GridMap" parent="."]
+mesh_library = ExtResource("2_o4f8d")
+cell_size = Vector3(1, 1, 1)
+cell_center_y = false
+data = {
+"cells": PackedInt32Array(0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 2, 4, 0, 0, 5, 0, 0, 0, 1, 0, 1, 1, 0, 2, 1, 0, 3, 1, 0, 4, 1, 0, 5, 1, 0, 0, 2, 0, 1, 2, 0, 2, 2, 0, 3, 2, 0, 4, 2, 0, 5, 2, 2, 0, 3, 0, 1, 3, 0, 2, 3, 0, 3, 3, 0, 4, 3, 0, 5, 3, 0, 0, 65525, 0, 1, 65525, 0, 2, 65525, 0, 3, 65525, 2, 4, 65525, 0, 5, 65525, 0, 6, 65525, 0, 7, 65525, 0, 0, 65526, 0, 1, 65526, 0, 2, 65526, 0, 3, 65526, 0, 4, 65526, 0, 5, 65526, 0, 6, 65526, 0, 7, 65526, 2, 0, 65527, 2, 1, 65527, 0, 2, 65527, 0, 3, 65527, 0, 4, 65527, 0, 5, 65527, 0, 6, 65527, 0, 7, 65527, 0, 0, 65528, 0, 1, 65528, 0, 2, 65528, 2, 3, 65528, 0, 4, 65528, 0, 5, 65528, 0, 6, 65528, 0, 7, 65528, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 15, 0, 0, 11, 1, 2, 12, 1, 0, 13, 1, 0, 14, 1, 0, 15, 1, 0, 11, 2, 0, 12, 2, 0, 13, 2, 0, 14, 2, 0, 15, 2, 0, 11, 3, 0, 12, 3, 0, 13, 3, 0, 14, 3, 0, 15, 3, 0, 11, 4, 0, 12, 4, 0, 13, 4, 0, 14, 4, 0, 15, 4, 0, 11, 5, 0, 12, 5, 0, 13, 5, 0, 14, 5, 0, 15, 5, 0, 11, 6, 0, 12, 6, 0, 13, 6, 0, 14, 6, 0, 15, 6, 2, 11, 7, 0, 12, 7, 0, 13, 7, 0, 14, 7, 0, 15, 7, 0, 65525, 65525, 0, 65526, 65525, 0, 65527, 65525, 0, 65528, 65525, 0, 65525, 65526, 0, 65526, 65526, 0, 65527, 65526, 0, 65528, 65526, 2, 65525, 65527, 0, 65526, 65527, 0, 65527, 65527, 0, 65528, 65527, 0, 65525, 65528, 2, 65526, 65528, 0, 65527, 65528, 0, 65528, 65528, 0, 65525, 65529, 0, 65526, 65529, 0, 65527, 65529, 0, 65528, 65529, 0, 65525, 65530, 0, 65526, 65530, 0, 65527, 65530, 0, 65528, 65530, 0, 65525, 65531, 0, 65526, 65531, 0, 65527, 65531, 0, 65528, 65531, 0, 11, 65525, 0, 12, 65525, 2, 13, 65525, 0, 14, 65525, 0, 15, 65525, 0, 11, 65526, 2, 12, 65526, 0, 13, 65526, 0, 14, 65526, 0, 15, 65526, 0, 11, 65527, 0, 12, 65527, 0, 13, 65527, 0, 14, 65527, 0, 15, 65527, 0, 11, 65528, 0, 12, 65528, 0, 13, 65528, 0, 14, 65528, 0, 15, 65528, 0, 11, 65529, 0, 12, 65529, 0, 13, 65529, 0, 14, 65529, 0, 15, 65529, 2, 11, 65530, 0, 12, 65530, 0, 13, 65530, 0, 14, 65530, 0, 15, 65530, 0, 0, 65514, 0, 1, 65514, 0, 2, 65514, 0, 3, 65514, 0, 4, 65514, 2, 5, 65514, 0, 0, 65515, 0, 1, 65515, 0, 2, 65515, 0, 3, 65515, 0, 4, 65515, 0, 5, 65515, 0, 0, 65516, 2, 1, 65516, 0, 2, 65516, 0, 3, 65516, 0, 4, 65516, 0, 5, 65516, 0, 0, 65517, 0, 1, 65517, 0, 2, 65517, 0, 3, 65517, 0, 4, 65517, 0, 5, 65517, 0, 0, 65518, 0, 1, 65518, 0, 2, 65518, 0, 3, 65518, 0, 4, 65518, 0, 5, 65518, 0, 0, 65519, 0, 1, 65519, 0, 2, 65519, 0, 3, 65519, 0, 4, 65519, 2, 5, 65519, 0, 22, 0, 0, 23, 0, 0, 24, 0, 0, 25, 0, 0, 26, 0, 0, 27, 0, 0, 28, 0, 0, 29, 0, 0, 22, 1, 0, 23, 1, 0, 24, 1, 0, 25, 1, 0, 26, 1, 0, 27, 1, 0, 28, 1, 0, 29, 1, 2, 22, 2, 2, 23, 2, 0, 24, 2, 0, 25, 2, 0, 26, 2, 0, 27, 2, 0, 28, 2, 0, 29, 2, 0, 22, 3, 0, 23, 3, 0, 24, 3, 0, 25, 3, 0, 26, 3, 0, 27, 3, 0, 28, 3, 0, 29, 3, 0, 65514, 65525, 0, 65515, 65525, 0, 65516, 65525, 0, 65517, 65525, 2, 65518, 65525, 0, 65519, 65525, 0, 65520, 65525, 0, 65521, 65525, 0, 65514, 65526, 0, 65515, 65526, 0, 65516, 65526, 0, 65517, 65526, 0, 65518, 65526, 0, 65519, 65526, 0, 65520, 65526, 0, 65521, 65526, 0, 65514, 65527, 0, 65515, 65527, 0, 65516, 65527, 0, 65517, 65527, 0, 65518, 65527, 0, 65519, 65527, 0, 65520, 65527, 0, 65521, 65527, 0, 65514, 65528, 0, 65515, 65528, 0, 65516, 65528, 0, 65517, 65528, 0, 65518, 65528, 0, 65519, 65528, 0, 65520, 65528, 0, 65521, 65528, 0, 65514, 65529, 0, 65515, 65529, 0, 65516, 65529, 0, 65517, 65529, 0, 65518, 65529, 0, 65519, 65529, 0, 65520, 65529, 0, 65521, 65529, 0, 65514, 65530, 0, 65515, 65530, 0, 65516, 65530, 0, 65517, 65530, 0, 65518, 65530, 0, 65519, 65530, 0, 65520, 65530, 0, 65521, 65530, 0, 65514, 65531, 0, 65515, 65531, 0, 65516, 65531, 0, 65517, 65531, 0, 65518, 65531, 0, 65519, 65531, 0, 65520, 65531, 0, 65521, 65531, 2, 65514, 65532, 0, 65515, 65532, 0, 65516, 65532, 0, 65517, 65532, 0, 65518, 65532, 0, 65519, 65532, 0, 65520, 65532, 0, 65521, 65532, 0, 65514, 65533, 0, 65515, 65533, 0, 65516, 65533, 0, 65517, 65533, 0, 65518, 65533, 0, 65519, 65533, 2, 65520, 65533, 0, 65521, 65533, 0, 11, 65514, 0, 12, 65514, 0, 13, 65514, 0, 14, 65514, 0, 15, 65514, 0, 16, 65514, 0, 17, 65514, 0, 11, 65515, 0, 12, 65515, 0, 13, 65515, 0, 14, 65515, 0, 15, 65515, 0, 16, 65515, 0, 17, 65515, 0, 11, 65516, 0, 12, 65516, 0, 13, 65516, 0, 14, 65516, 0, 15, 65516, 0, 16, 65516, 0, 17, 65516, 0, 11, 65517, 0, 12, 65517, 0, 13, 65517, 0, 14, 65517, 0, 15, 65517, 0, 16, 65517, 0, 17, 65517, 0, 11, 65518, 0, 12, 65518, 0, 13, 65518, 0, 14, 65518, 0, 15, 65518, 0, 16, 65518, 0, 17, 65518, 0, 11, 65519, 0, 12, 65519, 2, 13, 65519, 0, 14, 65519, 0, 15, 65519, 0, 16, 65519, 0, 17, 65519, 0, 22, 65525, 0, 23, 65525, 0, 24, 65525, 2, 25, 65525, 0, 22, 65526, 0, 23, 65526, 0, 24, 65526, 0, 25, 65526, 0, 22, 65527, 0, 23, 65527, 0, 24, 65527, 0, 25, 65527, 2, 22, 65528, 2, 23, 65528, 0, 24, 65528, 0, 25, 65528, 0, 22, 65529, 0, 23, 65529, 0, 24, 65529, 0, 25, 65529, 0, 22, 65530, 0, 23, 65530, 0, 24, 65530, 0, 25, 65530, 0, 22, 65531, 0, 23, 65531, 0, 24, 65531, 0, 25, 65531, 0, 22, 65532, 0, 23, 65532, 0, 24, 65532, 0, 25, 65532, 0, 0, 65503, 0, 1, 65503, 0, 2, 65503, 2, 3, 65503, 0, 0, 65504, 0, 1, 65504, 0, 2, 65504, 0, 3, 65504, 0, 0, 65505, 2, 1, 65505, 0, 2, 65505, 0, 3, 65505, 0, 0, 65506, 0, 1, 65506, 0, 2, 65506, 0, 3, 65506, 0, 0, 65507, 0, 1, 65507, 0, 2, 65507, 0, 3, 65507, 2, 0, 65508, 0, 1, 65508, 2, 2, 65508, 0, 3, 65508, 0, 65525, 65514, 0, 65526, 65514, 0, 65527, 65514, 0, 65528, 65514, 0, 65529, 65514, 0, 65525, 65515, 0, 65526, 65515, 0, 65527, 65515, 0, 65528, 65515, 0, 65529, 65515, 0, 65525, 65516, 0, 65526, 65516, 0, 65527, 65516, 0, 65528, 65516, 0, 65529, 65516, 2, 65525, 65517, 0, 65526, 65517, 0, 65527, 65517, 0, 65528, 65517, 0, 65529, 65517, 0, 33, 0, 0, 34, 0, 0, 35, 0, 0, 36, 0, 0, 37, 0, 0, 38, 0, 0, 39, 0, 0, 33, 1, 2, 34, 1, 0, 35, 1, 0, 36, 1, 0, 37, 1, 0, 38, 1, 0, 39, 1, 0, 33, 2, 0, 34, 2, 0, 35, 2, 0, 36, 2, 0, 37, 2, 0, 38, 2, 0, 39, 2, 0, 33, 3, 0, 34, 3, 0, 35, 3, 0, 36, 3, 0, 37, 3, 0, 38, 3, 0, 39, 3, 0, 65514, 0, 0, 65515, 0, 0, 65516, 0, 2, 65517, 0, 0, 65514, 1, 0, 65515, 1, 0, 65516, 1, 0, 65517, 1, 0, 65514, 2, 0, 65515, 2, 0, 65516, 2, 0, 65517, 2, 0, 65514, 3, 0, 65515, 3, 0, 65516, 3, 0, 65517, 3, 0, 65514, 65514, 0, 65515, 65514, 0, 65516, 65514, 0, 65517, 65514, 0, 65518, 65514, 0, 65519, 65514, 0, 65514, 65515, 0, 65515, 65515, 0, 65516, 65515, 0, 65517, 65515, 0, 65518, 65515, 0, 65519, 65515, 0, 65514, 65516, 0, 65515, 65516, 0, 65516, 65516, 0, 65517, 65516, 0, 65518, 65516, 0, 65519, 65516, 0, 65514, 65517, 0, 65515, 65517, 0, 65516, 65517, 0, 65517, 65517, 0, 65518, 65517, 0, 65519, 65517, 0, 65514, 65518, 0, 65515, 65518, 2, 65516, 65518, 0, 65517, 65518, 0, 65518, 65518, 0, 65519, 65518, 0, 22, 65514, 0, 23, 65514, 0, 24, 65514, 0, 25, 65514, 0, 26, 65514, 0, 27, 65514, 0, 28, 65514, 0, 22, 65515, 0, 23, 65515, 0, 24, 65515, 0, 25, 65515, 0, 26, 65515, 0, 27, 65515, 0, 28, 65515, 0, 22, 65516, 0, 23, 65516, 0, 24, 65516, 0, 25, 65516, 0, 26, 65516, 0, 27, 65516, 0, 28, 65516, 0, 22, 65517, 0, 23, 65517, 0, 24, 65517, 0, 25, 65517, 0, 26, 65517, 0, 27, 65517, 0, 28, 65517, 0, 22, 65518, 0, 23, 65518, 0, 24, 65518, 0, 25, 65518, 0, 26, 65518, 0, 27, 65518, 0, 28, 65518, 0, 22, 65519, 0, 23, 65519, 0, 24, 65519, 0, 25, 65519, 2, 26, 65519, 0, 27, 65519, 0, 28, 65519, 0, 33, 65525, 0, 34, 65525, 0, 35, 65525, 0, 36, 65525, 0, 37, 65525, 0, 38, 65525, 0, 39, 65525, 0, 40, 65525, 0, 33, 65526, 0, 34, 65526, 0, 35, 65526, 0, 36, 65526, 0, 37, 65526, 0, 38, 65526, 0, 39, 65526, 0, 40, 65526, 0, 33, 65527, 2, 34, 65527, 0, 35, 65527, 0, 36, 65527, 0, 37, 65527, 0, 38, 65527, 0, 39, 65527, 0, 40, 65527, 0, 33, 65528, 0, 34, 65528, 0, 35, 65528, 0, 36, 65528, 0, 37, 65528, 0, 38, 65528, 0, 39, 65528, 0, 40, 65528, 0, 33, 65529, 0, 34, 65529, 0, 35, 65529, 0, 36, 65529, 0, 37, 65529, 0, 38, 65529, 0, 39, 65529, 0, 40, 65529, 0, 0, 65492, 0, 1, 65492, 0, 2, 65492, 0, 3, 65492, 0, 4, 65492, 0, 5, 65492, 0, 6, 65492, 0, 7, 65492, 0, 8, 65492, 0, 0, 65493, 0, 1, 65493, 0, 2, 65493, 0, 3, 65493, 0, 4, 65493, 0, 5, 65493, 0, 6, 65493, 0, 7, 65493, 0, 8, 65493, 0, 0, 65494, 0, 1, 65494, 0, 2, 65494, 0, 3, 65494, 0, 4, 65494, 0, 5, 65494, 0, 6, 65494, 0, 7, 65494, 0, 8, 65494, 0, 0, 65495, 0, 1, 65495, 2, 2, 65495, 0, 3, 65495, 0, 4, 65495, 0, 5, 65495, 0, 6, 65495, 0, 7, 65495, 0, 8, 65495, 0, 65525, 65503, 0, 65526, 65503, 0, 65527, 65503, 0, 65528, 65503, 0, 65525, 65504, 0, 65526, 65504, 0, 65527, 65504, 0, 65528, 65504, 0, 65525, 65505, 0, 65526, 65505, 0, 65527, 65505, 0, 65528, 65505, 0, 65525, 65506, 0, 65526, 65506, 0, 65527, 65506, 0, 65528, 65506, 2, 65525, 65507, 0, 65526, 65507, 0, 65527, 65507, 0, 65528, 65507, 0, 65525, 65508, 0, 65526, 65508, 0, 65527, 65508, 0, 65528, 65508, 0, 11, 65503, 0, 12, 65503, 0, 13, 65503, 0, 14, 65503, 0, 15, 65503, 0, 16, 65503, 0, 17, 65503, 0, 18, 65503, 0, 19, 65503, 0, 11, 65504, 0, 12, 65504, 0, 13, 65504, 0, 14, 65504, 0, 15, 65504, 0, 16, 65504, 0, 17, 65504, 0, 18, 65504, 0, 19, 65504, 0, 11, 65505, 0, 12, 65505, 0, 13, 65505, 0, 14, 65505, 0, 15, 65505, 0, 16, 65505, 0, 17, 65505, 0, 18, 65505, 0, 19, 65505, 0, 11, 65506, 0, 12, 65506, 0, 13, 65506, 0, 14, 65506, 0, 15, 65506, 0, 16, 65506, 0, 17, 65506, 0, 18, 65506, 0, 19, 65506, 0, 11, 65507, 2, 12, 65507, 0, 13, 65507, 0, 14, 65507, 0, 15, 65507, 0, 16, 65507, 0, 17, 65507, 0, 18, 65507, 0, 19, 65507, 0, 11, 65508, 0, 12, 65508, 0, 13, 65508, 0, 14, 65508, 0, 15, 65508, 0, 16, 65508, 0, 17, 65508, 0, 18, 65508, 0, 19, 65508, 0, 11, 65509, 0, 12, 65509, 0, 13, 65509, 0, 14, 65509, 0, 15, 65509, 0, 16, 65509, 0, 17, 65509, 0, 18, 65509, 0, 19, 65509, 0, 11, 65510, 0, 12, 65510, 0, 13, 65510, 0, 14, 65510, 0, 15, 65510, 0, 16, 65510, 0, 17, 65510, 0, 18, 65510, 0, 19, 65510, 0)
+}
+
+[node name="RoomMesh" type="Node3D" parent="."]
+script = ExtResource("3_mualt")
+grid_map_path = NodePath("../GridMap")
+
+[node name="WallTile" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+script = ExtResource("5_hp26e")
+
+[node name="WallTile2" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile3" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+script = ExtResource("5_hp26e")
+
+[node name="DoorTile" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 0)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile4" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile5" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile6" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+script = ExtResource("5_hp26e")
+
+[node name="GeneratorCell" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1077962" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 1)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1077963" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 1)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1077964" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 1)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile7" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 1)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile8" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1077967" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 2)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1077968" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 2)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1077969" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 2)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1077970" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 2)
+script = ExtResource("5_hp26e")
+
+[node name="DoorTile2" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 2)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile9" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile10" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 3)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile11" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 3)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile12" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 3)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile13" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 3)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile14" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 3)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile15" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -11)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile16" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -11)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile17" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -11)
+script = ExtResource("5_hp26e")
+
+[node name="DoorTile3" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -11)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile18" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -11)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile19" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -11)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile20" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -11)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile21" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -11)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile22" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -10)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1077987" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -10)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1077988" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -10)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1077989" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -10)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1077990" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -10)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1077991" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -10)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1077992" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -10)
+script = ExtResource("5_hp26e")
+
+[node name="DoorTile4" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -10)
+script = ExtResource("5_hp26e")
+
+[node name="DoorTile5" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -9)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1077995" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -9)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1077996" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -9)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1077997" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -9)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1077998" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -9)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1077999" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -9)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078000" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -9)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile23" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -9)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile24" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile25" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -8)
+script = ExtResource("5_hp26e")
+
+[node name="DoorTile6" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -8)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile26" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -8)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile27" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -8)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile28" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -8)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile29" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -8)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile30" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -8)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile31" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 0)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile32" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 0)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile33" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, 0)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile34" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 0)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile35" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 0)
+script = ExtResource("5_hp26e")
+
+[node name="DoorTile7" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 1)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078016" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 1)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078017" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, 1)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078018" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 1)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile36" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 1)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile37" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 2)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078021" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 2)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078022" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, 2)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078023" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 2)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile38" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 2)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile39" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 3)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078026" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 3)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078027" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, 3)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078028" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 3)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile40" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 3)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile41" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 4)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078031" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 4)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078032" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, 4)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078033" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 4)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile42" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 4)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile43" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 5)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078036" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 5)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078037" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, 5)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078038" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 5)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile44" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 5)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile45" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 6)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078041" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 6)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078042" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, 6)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078043" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 6)
+script = ExtResource("5_hp26e")
+
+[node name="DoorTile8" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 6)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile46" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, 7)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile47" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 7)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile48" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, 7)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile49" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 7)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile50" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 7)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile51" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, -11)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile52" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -11)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile53" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -11)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile54" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -11)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile55" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, -10)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078055" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -10)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078056" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -10)
+script = ExtResource("5_hp26e")
+
+[node name="DoorTile9" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -10)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile56" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, -9)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078059" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -9)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078060" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -9)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile57" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -9)
+script = ExtResource("5_hp26e")
+
+[node name="DoorTile10" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, -8)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078063" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -8)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078064" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -8)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile58" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -8)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile59" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, -7)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078067" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -7)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078068" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -7)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile60" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -7)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile61" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, -6)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078071" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -6)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078072" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -6)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile62" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -6)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile63" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, -5)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile64" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -5)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile65" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -5)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile66" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -5)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile67" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, -11)
+script = ExtResource("5_hp26e")
+
+[node name="DoorTile11" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -11)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile68" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -11)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile69" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, -11)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile70" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -11)
+script = ExtResource("5_hp26e")
+
+[node name="DoorTile12" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, -10)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078084" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -10)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078085" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -10)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078086" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, -10)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile71" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -10)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile72" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, -9)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078089" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -9)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078090" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -9)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078091" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, -9)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile73" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -9)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile74" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, -8)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078094" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -8)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078095" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -8)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078096" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, -8)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile75" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -8)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile76" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, -7)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078099" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -7)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078100" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -7)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078101" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, -7)
+script = ExtResource("5_hp26e")
+
+[node name="DoorTile13" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -7)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile77" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, -6)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile78" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -6)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile79" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -6)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile80" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, -6)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile81" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -6)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile82" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -22)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile83" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -22)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile84" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -22)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile85" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -22)
+script = ExtResource("5_hp26e")
+
+[node name="DoorTile14" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -22)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile86" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -22)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile87" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -21)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078115" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -21)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078116" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -21)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078117" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -21)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078118" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -21)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile88" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -21)
+script = ExtResource("5_hp26e")
+
+[node name="DoorTile15" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078121" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -20)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078122" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -20)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078123" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -20)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078124" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -20)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile89" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -20)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile90" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -19)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078127" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -19)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078128" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -19)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078129" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -19)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078130" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -19)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile91" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -19)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile92" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -18)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078133" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -18)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078134" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -18)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078135" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -18)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078136" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -18)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile93" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -18)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile94" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -17)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile95" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -17)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile96" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -17)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile97" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -17)
+script = ExtResource("5_hp26e")
+
+[node name="DoorTile16" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -17)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile98" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -17)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile99" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, 0)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile100" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 0, 0)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile101" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 0)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile102" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, 0)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile103" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 0)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile104" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 0, 0)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile105" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, 0)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile106" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 0, 0)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile107" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, 1)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078153" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 0, 1)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078154" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 1)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078155" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, 1)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078156" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 1)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078157" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 0, 1)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078158" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, 1)
+script = ExtResource("5_hp26e")
+
+[node name="DoorTile17" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 0, 1)
+script = ExtResource("5_hp26e")
+
+[node name="DoorTile18" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, 2)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078161" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 0, 2)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078162" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 2)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078163" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, 2)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078164" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 2)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078165" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 0, 2)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078166" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, 2)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile108" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 0, 2)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile109" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, 3)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile110" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 0, 3)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile111" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 3)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile112" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, 3)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile113" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 3)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile114" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 0, 3)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile115" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, 3)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile116" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29, 0, 3)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile117" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, -11)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile118" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 0, -11)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile119" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, -11)
+script = ExtResource("5_hp26e")
+
+[node name="DoorTile19" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 0, -11)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile120" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, -11)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile121" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0, -11)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile122" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -11)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile123" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, -11)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile124" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, -10)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078185" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 0, -10)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078186" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, -10)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078187" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 0, -10)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078188" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, -10)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078189" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0, -10)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078190" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -10)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile125" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, -10)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile126" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, -9)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078193" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 0, -9)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078194" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, -9)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078195" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 0, -9)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078196" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, -9)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078197" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0, -9)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078198" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -9)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile127" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, -9)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile128" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, -8)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078201" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 0, -8)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078202" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, -8)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078203" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 0, -8)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078204" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, -8)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078205" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0, -8)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078206" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -8)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile129" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, -8)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile130" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, -7)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078209" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 0, -7)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078210" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, -7)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078211" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 0, -7)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078212" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, -7)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078213" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0, -7)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078214" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -7)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile131" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, -7)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile132" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, -6)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078217" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 0, -6)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078218" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, -6)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078219" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 0, -6)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078220" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, -6)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078221" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0, -6)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078222" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -6)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile133" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, -6)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile134" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, -5)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078225" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 0, -5)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078226" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, -5)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078227" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 0, -5)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078228" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, -5)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078229" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0, -5)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078230" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -5)
+script = ExtResource("5_hp26e")
+
+[node name="DoorTile20" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, -5)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile135" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, -4)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078233" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 0, -4)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078234" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, -4)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078235" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 0, -4)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078236" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, -4)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078237" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0, -4)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078238" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -4)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile136" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, -4)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile137" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, -3)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile138" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 0, -3)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile139" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, -3)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile140" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 0, -3)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile141" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, -3)
+script = ExtResource("5_hp26e")
+
+[node name="DoorTile21" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0, -3)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile142" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -3)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile143" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, -3)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile144" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, -22)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile145" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -22)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile146" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -22)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile147" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, -22)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile148" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -22)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile149" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, -22)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile150" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0, -22)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile151" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, -21)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078256" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -21)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078257" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -21)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078258" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, -21)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078259" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -21)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078260" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, -21)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile152" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0, -21)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile153" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, -20)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078263" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -20)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078264" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -20)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078265" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, -20)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078266" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -20)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078267" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, -20)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile154" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0, -20)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile155" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, -19)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078270" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -19)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078271" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -19)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078272" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, -19)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078273" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -19)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078274" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, -19)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile156" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0, -19)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile157" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, -18)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078277" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -18)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078278" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -18)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078279" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, -18)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078280" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -18)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078281" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, -18)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile158" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0, -18)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile159" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, -17)
+script = ExtResource("5_hp26e")
+
+[node name="DoorTile22" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -17)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile160" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -17)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile161" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, -17)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile162" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -17)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile163" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, -17)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile164" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0, -17)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile165" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, -11)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile166" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 0, -11)
+script = ExtResource("5_hp26e")
+
+[node name="DoorTile23" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, -11)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile167" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, -11)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile168" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, -10)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078295" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 0, -10)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078296" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, -10)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile169" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, -10)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile170" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, -9)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078299" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 0, -9)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078300" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, -9)
+script = ExtResource("5_hp26e")
+
+[node name="DoorTile24" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, -9)
+script = ExtResource("5_hp26e")
+
+[node name="DoorTile25" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, -8)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078303" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 0, -8)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078304" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, -8)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile171" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, -8)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile172" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, -7)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078307" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 0, -7)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078308" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, -7)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile173" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, -7)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile174" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, -6)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078311" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 0, -6)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078312" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, -6)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile175" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, -6)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile176" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, -5)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078315" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 0, -5)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078316" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, -5)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile177" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, -5)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile178" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, -4)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile179" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 0, -4)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile180" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, -4)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile181" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, -4)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile182" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -33)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile183" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -33)
+script = ExtResource("5_hp26e")
+
+[node name="DoorTile26" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -33)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile184" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -33)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile185" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -32)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078327" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -32)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078328" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -32)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile186" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -32)
+script = ExtResource("5_hp26e")
+
+[node name="DoorTile27" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -31)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078331" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -31)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078332" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -31)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile187" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -31)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile188" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -30)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078335" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -30)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078336" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -30)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile189" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -30)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile190" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -29)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078339" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -29)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078340" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -29)
+script = ExtResource("5_hp26e")
+
+[node name="DoorTile28" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -29)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile191" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -28)
+script = ExtResource("5_hp26e")
+
+[node name="DoorTile29" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -28)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile192" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -28)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile193" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -28)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile194" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, -22)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile195" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -22)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile196" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -22)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile197" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -22)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile198" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -22)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile199" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, -21)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078352" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -21)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078353" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -21)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078354" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -21)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile200" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -21)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile201" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, -20)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078357" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -20)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078358" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -20)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078359" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -20)
+script = ExtResource("5_hp26e")
+
+[node name="DoorTile30" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -20)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile202" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, -19)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile203" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -19)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile204" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -19)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile205" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -19)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile206" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, -19)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile207" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33, 0, 0)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile208" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, 0)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile209" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 0, 0)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile210" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 0)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile211" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37, 0, 0)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile212" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 0, 0)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile213" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39, 0, 0)
+script = ExtResource("5_hp26e")
+
+[node name="DoorTile31" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33, 0, 1)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078374" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, 1)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078375" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 0, 1)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078376" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 1)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078377" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37, 0, 1)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078378" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 0, 1)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile214" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39, 0, 1)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile215" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33, 0, 2)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078381" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, 2)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078382" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 0, 2)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078383" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 2)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078384" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37, 0, 2)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078385" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 0, 2)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile216" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39, 0, 2)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile217" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33, 0, 3)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile218" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, 3)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile219" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 0, 3)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile220" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, 3)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile221" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37, 0, 3)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile222" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 0, 3)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile223" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39, 0, 3)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile224" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, 0)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile225" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 0, 0)
+script = ExtResource("5_hp26e")
+
+[node name="DoorTile32" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, 0)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile226" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 0, 0)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile227" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, 1)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078399" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 0, 1)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078400" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, 1)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile228" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 0, 1)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile229" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, 2)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078403" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 0, 2)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078404" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, 2)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile230" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 0, 2)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile231" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, 3)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile232" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 0, 3)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile233" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, 3)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile234" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 0, 3)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile235" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, -22)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile236" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 0, -22)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile237" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, -22)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile238" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 0, -22)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile239" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, -22)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile240" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0, -22)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile241" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, -21)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078417" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 0, -21)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078418" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, -21)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078419" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 0, -21)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078420" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, -21)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile242" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0, -21)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile243" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, -20)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078423" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 0, -20)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078424" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, -20)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078425" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 0, -20)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078426" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, -20)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile244" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0, -20)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile245" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, -19)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078429" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 0, -19)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078430" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, -19)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078431" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 0, -19)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078432" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, -19)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile246" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0, -19)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile247" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22, 0, -18)
+script = ExtResource("5_hp26e")
+
+[node name="DoorTile33" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 0, -18)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile248" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, -18)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile249" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 0, -18)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile250" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, -18)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile251" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17, 0, -18)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile252" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, -22)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile253" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 0, -22)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile254" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, -22)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile255" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, -22)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile256" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, -22)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile257" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 0, -22)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile258" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, -22)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile259" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, -21)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078448" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 0, -21)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078449" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, -21)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078450" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, -21)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078451" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, -21)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078452" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 0, -21)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile260" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, -21)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile261" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, -20)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078455" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 0, -20)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078456" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, -20)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078457" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, -20)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078458" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, -20)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078459" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 0, -20)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile262" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, -20)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile263" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, -19)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078462" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 0, -19)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078463" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, -19)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078464" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, -19)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078465" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, -19)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078466" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 0, -19)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile264" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, -19)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile265" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, -18)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078469" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 0, -18)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078470" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, -18)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078471" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, -18)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078472" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, -18)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078473" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 0, -18)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile266" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, -18)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile267" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, -17)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile268" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23, 0, -17)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile269" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, -17)
+script = ExtResource("5_hp26e")
+
+[node name="DoorTile34" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 0, -17)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile270" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, -17)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile271" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 0, -17)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile272" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28, 0, -17)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile273" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33, 0, -11)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile274" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, -11)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile275" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 0, -11)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile276" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, -11)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile277" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37, 0, -11)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile278" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 0, -11)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile279" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39, 0, -11)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile280" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, -11)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile281" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33, 0, -10)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078491" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, -10)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078492" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 0, -10)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078493" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, -10)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078494" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37, 0, -10)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078495" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 0, -10)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078496" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39, 0, -10)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile282" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, -10)
+script = ExtResource("5_hp26e")
+
+[node name="DoorTile35" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33, 0, -9)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078499" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, -9)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078500" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 0, -9)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078501" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, -9)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078502" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37, 0, -9)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078503" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 0, -9)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078504" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39, 0, -9)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile283" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, -9)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile284" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33, 0, -8)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078507" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, -8)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078508" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 0, -8)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078509" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, -8)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078510" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37, 0, -8)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078511" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 0, -8)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078512" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39, 0, -8)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile285" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, -8)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile286" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33, 0, -7)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile287" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34, 0, -7)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile288" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35, 0, -7)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile289" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36, 0, -7)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile290" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37, 0, -7)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile291" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38, 0, -7)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile292" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39, 0, -7)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile293" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, -7)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile294" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -44)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile295" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -44)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile296" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -44)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile297" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -44)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile298" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -44)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile299" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -44)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile300" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -44)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile301" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -44)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile302" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -44)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile303" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -43)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078532" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -43)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078533" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -43)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078534" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -43)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078535" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -43)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078536" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -43)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078537" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -43)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078538" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -43)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile304" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -43)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile305" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -42)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078541" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -42)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078542" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -42)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078543" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -42)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078544" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -42)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078545" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -42)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078546" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -42)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078547" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -42)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile306" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -42)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile307" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -41)
+script = ExtResource("5_hp26e")
+
+[node name="DoorTile36" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -41)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile308" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -41)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile309" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -41)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile310" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -41)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile311" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -41)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile312" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -41)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile313" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -41)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile314" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -41)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile315" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, -33)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile316" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -33)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile317" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -33)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile318" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -33)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile319" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, -32)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078563" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -32)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078564" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -32)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile320" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -32)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile321" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, -31)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078567" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -31)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078568" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -31)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile322" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -31)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile323" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, -30)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078571" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -30)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078572" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -30)
+script = ExtResource("5_hp26e")
+
+[node name="DoorTile37" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -30)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile324" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, -29)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078575" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -29)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078576" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -29)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile325" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -29)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile326" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, -28)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile327" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -28)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile328" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -28)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile329" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -28)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile330" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, -33)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile331" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -33)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile332" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -33)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile333" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, -33)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile334" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -33)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile335" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, -33)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile336" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0, -33)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile337" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, -33)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile338" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 0, -33)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile339" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, -32)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078592" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -32)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078593" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -32)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078594" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, -32)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078595" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -32)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078596" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, -32)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078597" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0, -32)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078598" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, -32)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile340" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 0, -32)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile341" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, -31)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078601" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -31)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078602" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -31)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078603" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, -31)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078604" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -31)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078605" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, -31)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078606" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0, -31)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078607" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, -31)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile342" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 0, -31)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile343" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, -30)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078610" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -30)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078611" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -30)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078612" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, -30)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078613" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -30)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078614" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, -30)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078615" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0, -30)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078616" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, -30)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile344" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 0, -30)
+script = ExtResource("5_hp26e")
+
+[node name="DoorTile38" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, -29)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078619" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -29)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078620" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -29)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078621" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, -29)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078622" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -29)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078623" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, -29)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078624" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0, -29)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078625" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, -29)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile345" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 0, -29)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile346" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, -28)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078628" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -28)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078629" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -28)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078630" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, -28)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078631" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -28)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078632" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, -28)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078633" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0, -28)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078634" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, -28)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile347" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 0, -28)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile348" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, -27)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078637" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -27)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078638" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -27)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078639" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, -27)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078640" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -27)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078641" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, -27)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078642" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0, -27)
+script = ExtResource("5_hp26e")
+
+[node name="@Node3D@1078643" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, -27)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile349" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 0, -27)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile350" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0, -26)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile351" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -26)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile352" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -26)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile353" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, -26)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile354" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -26)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile355" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, -26)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile356" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0, -26)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile357" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 0, -26)
+script = ExtResource("5_hp26e")
+
+[node name="WallTile358" type="Node3D" parent="RoomMesh" instance=ExtResource("4_3lyah")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 0, -26)
+script = ExtResource("5_hp26e")
+
+[node name="DemoCharacter" parent="." instance=ExtResource("6_p6rsa")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 2, 0.642795, 2)
+
+[node name="Camera3D" parent="DemoCharacter" index="2"]
+transform = Transform3D(2, 0, 0, 0, -8.74228e-08, 2, 0, -2, -8.74228e-08, 0, 10, 0)
+
+[editable path="DemoCharacter"]
