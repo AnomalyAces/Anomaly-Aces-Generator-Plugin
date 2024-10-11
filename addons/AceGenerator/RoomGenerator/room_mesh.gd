@@ -12,8 +12,9 @@ signal east_door_opened
 signal west_door_opened
 
 @export var start: bool = false : set = set_start
-@export var grid_map: GridMap
-@export var room_cell_scene: PackedScene
+var grid_map: GridMap
+var room_cell_scene: PackedScene
+var room_door_type: GeneratorDoor.DOOR_TYPE
 
 #var room_cell_scene: PackedScene = preload("res://Generator/MeshLibrary/GeneratorCell.tscn")
 
@@ -34,6 +35,12 @@ func set_start(_val:bool)->void:
 	if Engine.is_editor_hint():
 		update_dungeon()
 
+
+##Intialize##
+func initalize_room_mesh(g_map: GridMap, cell_scene: PackedScene, d_type: GeneratorDoor.DOOR_TYPE):
+	grid_map = g_map
+	room_cell_scene = cell_scene
+	room_door_type = d_type
 
 
 ##Helpers##
@@ -107,22 +114,23 @@ func update_dungeon():
 	for cell in grid_map.get_used_cells():
 		var cell_index : int = grid_map.get_cell_item(cell)
 		if cell_index <= DOOR_TILE && cell_index >= ROOM_TILE:
-			var dun_cell: GeneratorCell = room_cell_scene.instantiate()
-			dun_cell.position = Vector3(cell) #+ Vector3(0.5, 0, 0.5) #This offest should be a const
-			dun_cell.connect("north_door_opened", _on_north_door_opened)
-			dun_cell.connect("south_door_opened", _on_south_door_opened)
-			dun_cell.connect("east_door_opened", _on_east_door_opened)
-			dun_cell.connect("west_door_opened", _on_west_door_opened)
-			add_child(dun_cell)
-			dun_cell.set_owner(owner)
+			var room_cell: GeneratorCell = room_cell_scene.instantiate()
+			room_cell.door_type = room_door_type
+			room_cell.position = Vector3(cell) #+ Vector3(0.5, 0, 0.5) #This offest should be a const
+			room_cell.connect("north_door_opened", _on_north_door_opened)
+			room_cell.connect("south_door_opened", _on_south_door_opened)
+			room_cell.connect("east_door_opened", _on_east_door_opened)
+			room_cell.connect("west_door_opened", _on_west_door_opened)
+			add_child(room_cell)
+			room_cell.set_owner(owner)
 			for i in 4: #Number of sides of a room
 				var cell_n: Vector3i  = cell + directions.values()[i]
 				var cell_n_index: int = grid_map.get_cell_item(cell_n)
 				if cell_n_index == -1 || cell_n_index == BORDER_TILE:
-					handle_none(dun_cell, directions.keys()[i])
+					handle_none(room_cell, directions.keys()[i])
 				else:
 					var key: String = str(cell_index) + str(cell_n_index)
-					call("handle_"+key, dun_cell, directions.keys()[i])
+					call("handle_"+key, room_cell, directions.keys()[i])
 				
 
 func update_dungeon_cell(room_id: String, cell_pos: Vector3):

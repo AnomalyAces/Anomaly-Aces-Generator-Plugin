@@ -16,6 +16,9 @@ const BORDER_TILE:int = 3
 @export_subgroup("Grid Map")
 @export var mesh_library: MeshLibrary
 @export var cell_size: Vector3i = Vector3i.ONE
+@export_subgroup("Generator Cell")
+@export var room_cell_scene: PackedScene
+@export var door_type: GeneratorDoor.DOOR_TYPE
 
 
 
@@ -32,17 +35,22 @@ var rooms: Array[Room] = []
 
 func _ready() -> void:
 	
+	room_mesh.initalize_room_mesh(grid_map, room_cell_scene, door_type)
+	
 	room_mesh.connect("north_door_opened", _move_to_north_room)
 	room_mesh.connect("south_door_opened", _move_to_south_room)
 	room_mesh.connect("east_door_opened", _move_to_east_room)
 	room_mesh.connect("west_door_opened", _move_to_west_room)
 	
+	if Engine.is_editor_hint():
+		return
 	generate()
 
 
 #Setters
 func set_start(_val:bool)->void:
 	if Engine.is_editor_hint():
+		number_of_rooms = 5
 		generate()
 
 

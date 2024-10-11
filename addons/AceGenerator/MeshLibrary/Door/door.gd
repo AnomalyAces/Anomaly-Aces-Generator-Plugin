@@ -1,14 +1,25 @@
 class_name GeneratorDoor extends StaticBody3D
 
+enum DOOR_TYPE {
+	SWING,
+	RISE
+}
+
+
 signal door_opened
+signal door_closed
 
-
-@export var animation_player: AnimationPlayer
-@export var door_name: String
+var animation_player: AnimationPlayer
+var door_name: String
+var door_type: DOOR_TYPE
 
 var toogle: bool = false
 var interactable: bool = true
 
+func initialize_door(anim: AnimationPlayer, d_name: String, d_type: DOOR_TYPE):
+	animation_player = anim
+	door_name = d_name
+	door_type = d_type
 
 func interact():
 	if interactable == true:
@@ -24,4 +35,5 @@ func _on_timeout():
 	interactable = false
 	animation_player.play(door_name+"_close")
 	await animation_player.animation_finished
+	door_closed.emit()
 	interactable = true
