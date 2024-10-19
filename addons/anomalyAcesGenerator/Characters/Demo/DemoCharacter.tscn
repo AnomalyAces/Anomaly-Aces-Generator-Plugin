@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://b1v6ubve7frus"]
+
+[ext_resource type="Script" path="res://addons/anomalyAcesGenerator/Characters/Demo/demo_character.gd" id="1_p3mul"]
+[ext_resource type="Script" path="res://addons/anomalyAcesGenerator/Characters/Demo/demo_character_raycast_3d.gd" id="2_hv17r"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_4s7hy"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qcuho"]
+albedo_color = Color(0.95484, 0.194842, 0.945977, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7op7w"]
+
+[node name="DemoCharacter" type="CharacterBody3D"]
+script = ExtResource("1_p3mul")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_4s7hy")
+surface_material_override/0 = SubResource("StandardMaterial3D_qcuho")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_7op7w")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 10, 0)
+current = true
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+collision_mask = 3
+debug_shape_custom_color = Color(0, 0.0859375, 1, 1)
+debug_shape_thickness = 5
+script = ExtResource("2_hv17r")

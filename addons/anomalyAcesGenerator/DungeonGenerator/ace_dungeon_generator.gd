@@ -1,4 +1,5 @@
 @tool
+@icon("res://addons/anomalyAcesGenerator/AceDungeonGenerator.svg")
 extends Node3D
 
 const ROOM_TILE:int = 0
@@ -30,6 +31,9 @@ var start_room: Vector3
 var rooms: Array[Room] = []
 
 func _ready() -> void:
+	if Engine.is_editor_hint():
+		return
+	
 	generate()
 	dun_mesh.create_dungeon()
 

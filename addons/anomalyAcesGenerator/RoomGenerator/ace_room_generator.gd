@@ -1,4 +1,5 @@
 @tool
+@icon("res://addons/anomalyAcesGenerator/AceRoomGenerator.svg")
 extends Node3D
 
 const ROOM_TILE:int = 0
@@ -7,24 +8,26 @@ const DOOR_TILE:int = 2
 const BORDER_TILE:int = 3
 
 @export_group("Room Generator")
+@export_subgroup("Room")
 @export var start:bool = false : set = set_start
 @export var number_of_rooms: int = 10
 @export var min_room_size: int = 2
 @export var max_room_size:int = 4
 @export var room_margin: int = 1
 @export var custom_seed : String = "" : set = set_seed
-@export_subgroup("Grid Map")
-@export var mesh_library: MeshLibrary
-@export var cell_size: Vector3i = Vector3i.ONE
 @export_subgroup("Generator Cell")
 @export var room_cell_scene: PackedScene
 @export var door_type: GeneratorDoor.DOOR_TYPE
+@export_subgroup("Grid Map")
+@export var cell_size: Vector3i = Vector3i.ONE
+@export var mesh_library: MeshLibrary
+@export_subgroup("Character")
+@export var player: CharacterBody3D
 
 
 
 @onready var grid_map: GridMap = $GridMap
 @onready var room_mesh: RoomMesh = $RoomMesh
-@onready var player: Character = $DemoCharacter
 
 var room_tiles: Array[PackedVector3Array] = []
 var room_positions: PackedVector3Array = []
@@ -34,7 +37,7 @@ var start_room: Vector3
 var rooms: Array[Room] = []
 
 func _ready() -> void:
-	
+	_initialize_grid_map(cell_size, mesh_library)
 	room_mesh.initalize_room_mesh(grid_map, room_cell_scene, door_type)
 	
 	room_mesh.connect("north_door_opened", _move_to_north_room)
@@ -51,6 +54,8 @@ func _ready() -> void:
 func set_start(_val:bool)->void:
 	if Engine.is_editor_hint():
 		number_of_rooms = 5
+		_initialize_grid_map(cell_size, mesh_library)
+		room_mesh.initalize_room_mesh(grid_map, room_cell_scene, door_type)
 		generate()
 
 
@@ -76,6 +81,9 @@ func generate():
 		
 	
 
+func _initialize_grid_map(cell_sz: Vector3i, mesh_lib: MeshLibrary):
+	grid_map.cell_size = cell_sz
+	grid_map.mesh_library = mesh_lib
 
 func _generate_next_rooms(room: Room = null):
 	var rooms_to_create: int = clamp(randi_range(1,4), 1, (number_of_rooms - rooms.size()) )
@@ -105,7 +113,7 @@ func _generate_next_rooms(room: Room = null):
 		var dir: String = directions.pick_random()
 		directions.erase(dir)
 		print("Direction Selected: %s" % dir)
-		var dir_pos: Vector3i = start_pos + (Vector3i(max_room_size+room_margin,0,max_room_size+room_margin ) * Constants.DIRECTIONS.get(dir))
+		var dir_pos: Vector3i = start_pos + (Vector3i(max_room_size+room_margin,0,max_room_size+room_margin ) * AceGeneratorConstants.DIRECTIONS.get(dir))
 		
 		if grid_map.get_cell_item(dir_pos) == ROOM_TILE:
 			print("Position %s already contains a room" % dir_pos)
@@ -149,9 +157,9 @@ func _generate_next_rooms(room: Room = null):
 func _filter_room_directions(room: Room) -> Array[String]:
 	var directions: Array[String] 
 	var temp_array: Array[String] 
-	temp_array.append_array(Constants.DIRECTIONS.keys())
+	temp_array.append_array(AceGeneratorConstants.DIRECTIONS.keys())
 	
-	for dir in Constants.DIRECTIONS.keys():
+	for dir in AceGeneratorConstants.DIRECTIONS.keys():
 		match dir:
 			"n":
 				if room.north_room != null:
@@ -258,7 +266,8 @@ func _move_to_north_room():
 		return grid_map.get_cell_item(vec) && vec.z == curr_room.north_room.end_position.z
 	var room_door: Vector3i = AceArrayUtil.findFirst(curr_room.north_room.tiles, find_north_room_door)
 	room_door.y = ceili(player.position.y)
-	player.position = Vector3(room_door.x,player.position.y, room_door.z) + Vector3.FORWARD
+	var door_local_pos = grid_map.map_to_local(room_door)
+	player.position = Vector3(door_local_pos.x,player.position.y, door_local_pos.z) + Vector3.FORWARD
 	print("Moving to north room: %s" % player.position)
 	
 
@@ -269,7 +278,8 @@ func _move_to_south_room():
 		return grid_map.get_cell_item(vec) && vec.z == curr_room.south_room.start_position.z
 	var room_door: Vector3i = AceArrayUtil.findFirst(curr_room.south_room.tiles, find_south_room_door)
 	room_door.y = ceili(player.position.y)
-	player.position = Vector3(room_door.x,player.position.y, room_door.z) + Vector3.BACK
+	var door_local_pos = grid_map.map_to_local(room_door)
+	player.position = Vector3(door_local_pos.x,player.position.y, door_local_pos.z) + Vector3.BACK
 	print("Moving to south room: %s" % player.position)
 
 func _move_to_east_room():
@@ -278,7 +288,8 @@ func _move_to_east_room():
 		# Find the door in the west region of the east room
 		return grid_map.get_cell_item(vec) && vec.x == curr_room.east_room.start_position.x
 	var room_door: Vector3i = AceArrayUtil.findFirst(curr_room.east_room.tiles, find_east_room_door)
-	player.position = Vector3(room_door.x,player.position.y, room_door.z) + Vector3.RIGHT
+	var door_local_pos = grid_map.map_to_local(room_door)
+	player.position = Vector3(door_local_pos.x,player.position.y, door_local_pos.z) + Vector3.RIGHT
 	print("Moving to east room: %s" % player.position)
 
 func _move_to_west_room():
@@ -288,5 +299,6 @@ func _move_to_west_room():
 		return grid_map.get_cell_item(vec) && vec.x == curr_room.west_room.end_position.x
 	var room_door: Vector3i = AceArrayUtil.findFirst(curr_room.west_room.tiles, find_west_room_door)
 	room_door.y = ceili(player.position.y)
-	player.position = Vector3(room_door.x,player.position.y, room_door.z) + Vector3.LEFT
+	var door_local_pos = grid_map.map_to_local(room_door)
+	player.position = Vector3(door_local_pos.x,player.position.y, door_local_pos.z) + Vector3.LEFT
 	print("Moving to west room: %s" % player.position)

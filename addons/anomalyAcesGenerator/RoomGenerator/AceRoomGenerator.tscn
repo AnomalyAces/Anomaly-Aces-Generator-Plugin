@@ -1,10 +1,10 @@
 [gd_scene load_steps=9 format=3 uid="uid://c2qm6ekmqnc5s"]
 
-[ext_resource type="Script" path="res://Generator/RoomGenerator/room_generator.gd" id="1_jh77p"]
-[ext_resource type="MeshLibrary" uid="uid://dikdiycg6a7ot" path="res://Generator/MeshLibrary/GeneratorCell/GeneratorTiles.tres" id="2_o4f8d"]
-[ext_resource type="Script" path="res://Generator/RoomGenerator/room_mesh.gd" id="3_mualt"]
-[ext_resource type="PackedScene" uid="uid://csn7brnf4x5gy" path="res://Generator/MeshLibrary/GeneratorCell/GeneratorCell.tscn" id="4_3lyah"]
-[ext_resource type="PackedScene" uid="uid://b1v6ubve7frus" path="res://Characters/Demo/DemoCharacter.tscn" id="6_p6rsa"]
+[ext_resource type="Script" path="res://addons/anomalyAcesGenerator/RoomGenerator/ace_room_generator.gd" id="1_jh77p"]
+[ext_resource type="MeshLibrary" uid="uid://dikdiycg6a7ot" path="res://addons/anomalyAcesGenerator/MeshLibrary/GeneratorCell/GeneratorTiles.tres" id="2_o4f8d"]
+[ext_resource type="Script" path="res://addons/anomalyAcesGenerator/RoomGenerator/room_mesh.gd" id="3_mualt"]
+[ext_resource type="PackedScene" uid="uid://csn7brnf4x5gy" path="res://addons/anomalyAcesGenerator/MeshLibrary/GeneratorCell/GeneratorCell.tscn" id="4_3lyah"]
+[ext_resource type="PackedScene" uid="uid://b1v6ubve7frus" path="res://addons/anomalyAcesGenerator/Characters/Demo/DemoCharacter.tscn" id="6_p6rsa"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hwul0"]
 sky_top_color = Color(0.0491508, 0.0667203, 0.438902, 1)
@@ -18,13 +18,13 @@ sky_material = SubResource("ProceduralSkyMaterial_hwul0")
 background_mode = 2
 sky = SubResource("Sky_e0w55")
 
-[node name="RoomGenerator" type="Node3D"]
+[node name="AceRoomGenerator" type="Node3D"]
 script = ExtResource("1_jh77p")
 number_of_rooms = 20
 min_room_size = 4
 max_room_size = 10
-mesh_library = ExtResource("2_o4f8d")
 room_cell_scene = ExtResource("4_3lyah")
+mesh_library = ExtResource("2_o4f8d")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_bj41a")
@@ -46,9 +46,5 @@ data = {
 script = ExtResource("3_mualt")
 
 [node name="DemoCharacter" parent="." instance=ExtResource("6_p6rsa")]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 2, 0.642795, 2)
-
-[node name="Camera3D" parent="DemoCharacter" index="2"]
-transform = Transform3D(2, 0, 0, 0, -8.74228e-08, 2, 0, -2, -8.74228e-08, 0, 10, 0)
-
-[editable path="DemoCharacter"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0.642795, 2)
+script = null
