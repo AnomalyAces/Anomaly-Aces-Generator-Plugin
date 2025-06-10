@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://gxjqur0aca5r"]
 
-[ext_resource type="Script" path="res://addons/anomalyAcesGenerator/DungeonGenerator/dun_mesh.gd" id="1_65gxr"]
-[ext_resource type="Script" path="res://addons/anomalyAcesGenerator/DungeonGenerator/ace_dungeon_generator.gd" id="1_aphxy"]
+[ext_resource type="Script" uid="uid://c4hlcpkjnusxe" path="res://addons/anomalyAcesGenerator/DungeonGenerator/dun_mesh.gd" id="1_65gxr"]
+[ext_resource type="Script" uid="uid://dn46eshkrdu0y" path="res://addons/anomalyAcesGenerator/DungeonGenerator/ace_dungeon_generator.gd" id="1_aphxy"]
 [ext_resource type="MeshLibrary" uid="uid://dikdiycg6a7ot" path="res://addons/anomalyAcesGenerator/MeshLibrary/GeneratorCell/GeneratorTiles.tres" id="2_nhper"]
 [ext_resource type="PackedScene" uid="uid://csn7brnf4x5gy" path="res://addons/anomalyAcesGenerator/MeshLibrary/GeneratorCell/GeneratorCell.tscn" id="4_riiek"]
 [ext_resource type="PackedScene" uid="uid://b1v6ubve7frus" path="res://addons/anomalyAcesGenerator/Characters/Demo/DemoCharacter.tscn" id="6_oq2pq"]

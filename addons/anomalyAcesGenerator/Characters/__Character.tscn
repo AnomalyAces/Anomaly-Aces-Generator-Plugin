@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://d27h5dmyuyfvg"]
-
-[ext_resource type="Script" path="res://addons/anomalyAcesGenerator/Characters/__character.gd" id="1_hxqbh"]
-
-[node name="Character" type="CharacterBody3D"]
-script = ExtResource("1_hxqbh")

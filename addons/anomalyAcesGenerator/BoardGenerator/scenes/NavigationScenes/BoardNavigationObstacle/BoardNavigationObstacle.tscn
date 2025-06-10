@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://cutwkx4835dmu"]
+
+[ext_resource type="Script" uid="uid://dqdljg20mii55" path="res://addons/anomalyAcesGenerator/BoardGenerator/scenes/NavigationScenes/BoardNavigationObstacle/board_navigation_obstacle.gd" id="1_23j67"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bbxkf"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_6d0kc"]
+
+[node name="Node3D" type="StaticBody3D"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+script = ExtResource("1_23j67")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_bbxkf")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("BoxMesh_6d0kc")

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bqgkrgfwlacvw"]
+
+[ext_resource type="Script" uid="uid://di288h7s44t6t" path="res://addons/anomalyAcesGenerator/BoardGenerator/editors/SpecialSpaceEditor/special_space_editor.gd" id="1_8k4nt"]
+
+[node name="SpecialSpaceEditor" type="Node"]
+script = ExtResource("1_8k4nt")

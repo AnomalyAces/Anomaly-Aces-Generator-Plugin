@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://bkfty13ihespr"]
+
+[ext_resource type="Script" uid="uid://bvxhjd4asp7i5" path="res://addons/anomalyAcesGenerator/BoardGenerator/editors/SpaceEditor/space_editor.gd" id="1_8ijtg"]
+[ext_resource type="PackedScene" uid="uid://bqgkrgfwlacvw" path="res://addons/anomalyAcesGenerator/BoardGenerator/editors/SpecialSpaceEditor/SpecialSpaceEditor.tscn" id="3_6pftv"]
+[ext_resource type="PackedScene" uid="uid://bjclmblvqa3vu" path="res://addons/anomalyAcesGenerator/BoardGenerator/editors/BuildingEditor/BuildingEditor.tscn" id="4_tronl"]
+
+[node name="SpaceEditor" type="Node" node_paths=PackedStringArray("specialSpaceEditor", "buildingEditor")]
+script = ExtResource("1_8ijtg")
+specialSpaceEditor = NodePath("SpecialSpaceEditor")
+buildingEditor = NodePath("BuildingEditor")
+
+[node name="SpecialSpaceEditor" parent="." instance=ExtResource("3_6pftv")]
+
+[node name="BuildingEditor" parent="." instance=ExtResource("4_tronl")]

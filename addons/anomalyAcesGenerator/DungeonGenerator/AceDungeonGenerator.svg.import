@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b48u11d4q488g"
-path="res://.godot/imported/AceRoomGenerator.svg-efac6a25889849bec79ff6185cbf590e.ctex"
+uid="uid://dllr0wbeuhsg0"
+path="res://.godot/imported/AceDungeonGenerator.svg-ccd287b6f10aedd7f0fb83fe2be63030.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/anomalyAcesGenerator/AceRoomGenerator.svg"
-dest_files=["res://.godot/imported/AceRoomGenerator.svg-efac6a25889849bec79ff6185cbf590e.ctex"]
+source_file="res://addons/anomalyAcesGenerator/DungeonGenerator/AceDungeonGenerator.svg"
+dest_files=["res://.godot/imported/AceDungeonGenerator.svg-ccd287b6f10aedd7f0fb83fe2be63030.ctex"]
 
 [params]
 

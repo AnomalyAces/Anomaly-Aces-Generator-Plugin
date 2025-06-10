@@ -1,5 +1,5 @@
 @tool
-@icon("res://addons/anomalyAcesGenerator/AceDungeonGenerator.svg")
+@icon("res://addons/anomalyAcesGenerator/DungeonGenerator/AceDungeonGenerator.svg")
 extends Node3D
 
 const ROOM_TILE:int = 0
@@ -21,7 +21,7 @@ const BORDER_TILE:int = 3
 
 @onready var grid_map: GridMap = $GridMap
 @onready var dun_mesh: DungeonMesh = $DunMesh
-@onready var player: Character = $DemoCharacter
+@onready var player: AceCharacter3D = $DemoCharacter
 
 var room_tiles: Array[PackedVector3Array] = []
 var room_positions: PackedVector3Array = []

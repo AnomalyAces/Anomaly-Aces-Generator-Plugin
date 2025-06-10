@@ -1,0 +1,255 @@
+[gd_scene load_steps=37 format=3 uid="uid://60hgaq0k2wo4"]
+
+[ext_resource type="Script" uid="uid://br75vfv7jqqft" path="res://addons/anomalyAcesGenerator/BoardGenerator/ace_board_generator.gd" id="1_8srbc"]
+[ext_resource type="MeshLibrary" uid="uid://b73mng2enmwun" path="res://Scenes/GameScene/SubScene/MeshLibrary/MeshLibrary.tres" id="2_a30kb"]
+[ext_resource type="Script" uid="uid://y3v2q2edf6yj" path="res://addons/anomalyAcesGenerator/BoardGenerator/resources/space.gd" id="2_xtm7o"]
+[ext_resource type="Script" uid="uid://i2p12etpt17t" path="res://addons/anomalyAcesGenerator/BoardGenerator/resources/special_space.gd" id="3_w5n17"]
+[ext_resource type="PackedScene" uid="uid://du3c3qfcgo2w7" path="res://addons/anomalyAcesGenerator/BoardGenerator/editors/RegionEditor/RegionEditor.tscn" id="5_rhxxi"]
+[ext_resource type="Script" uid="uid://cvvuaol4ab83t" path="res://addons/anomalyAcesGenerator/BoardGenerator/resources/building.gd" id="6_t3v11"]
+[ext_resource type="Script" uid="uid://g3354nmd7t57" path="res://addons/anomalyAcesGenerator/BoardGenerator/resources/region.gd" id="7_tglrv"]
+[ext_resource type="PackedScene" uid="uid://bkfty13ihespr" path="res://addons/anomalyAcesGenerator/BoardGenerator/editors/SpaceEditor/SpaceEditor.tscn" id="7_wlttv"]
+[ext_resource type="Script" uid="uid://wt5xl0ydoegl" path="res://addons/anomalyAcesGenerator/BoardGenerator/resources/region_prop.gd" id="8_m55yq"]
+[ext_resource type="Script" uid="uid://b2vt55kv6yjfr" path="res://addons/anomalyAcesGenerator/BoardGenerator/scenes/NavigationScenes/BoardNavigationController/board_navigation_controller.gd" id="9_f5t12"]
+[ext_resource type="PackedScene" uid="uid://sbwywnr30fp5" path="res://addons/anomalyAcesGenerator/Characters/BoardDemo/BoardDemoCharacter.tscn" id="10_iym0q"]
+[ext_resource type="MeshLibrary" uid="uid://ccrqounopfmf" path="res://addons/anomalyAcesGenerator/MeshLibrary/MeshLibrary.tres" id="10_t3v11"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jablh"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_f5t12"]
+sky_material = SubResource("ProceduralSkyMaterial_jablh")
+
+[sub_resource type="Environment" id="Environment_iym0q"]
+background_mode = 2
+sky = SubResource("Sky_f5t12")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="Resource" id="Resource_2qk1i"]
+script = ExtResource("2_xtm7o")
+name = "NormalSpace"
+description = "Triggers random event"
+
+[sub_resource type="Resource" id="Resource_en5gw"]
+script = ExtResource("3_w5n17")
+isRegional = false
+isSingleton = true
+percentage = 0
+name = "DivinerHQ"
+description = "Complete Quests. Change Jobs."
+
+[sub_resource type="Resource" id="Resource_yl1in"]
+script = ExtResource("3_w5n17")
+isRegional = true
+isSingleton = false
+percentage = 0
+name = "InnSpace"
+description = "A place to recover"
+
+[sub_resource type="Resource" id="Resource_rwje2"]
+script = ExtResource("3_w5n17")
+isRegional = true
+isSingleton = false
+percentage = 0
+name = "MagicShopSpace"
+description = "Purchase items here"
+
+[sub_resource type="Resource" id="Resource_ym0f8"]
+script = ExtResource("3_w5n17")
+isRegional = true
+isSingleton = false
+percentage = 0
+name = "WeaponShopSpace"
+description = "Purchase equipment here"
+
+[sub_resource type="Resource" id="Resource_t3v11"]
+script = ExtResource("6_t3v11")
+buildingName = "Diviner HQ"
+buildingIndex = 21
+spaceIndex = 7
+buildingTransparentIndex = 22
+eastTransparencyRange = 1
+westTransparencyRange = 1
+northTransparencyRange = 1
+southTransparencyRange = 1
+metadata/_custom_type_script = "uid://cvvuaol4ab83t"
+
+[sub_resource type="Resource" id="Resource_2yep5"]
+script = ExtResource("6_t3v11")
+buildingName = "Inn"
+buildingIndex = 23
+spaceIndex = 8
+buildingTransparentIndex = 24
+eastTransparencyRange = 1
+westTransparencyRange = 1
+northTransparencyRange = 1
+southTransparencyRange = 1
+metadata/_custom_type_script = "uid://cvvuaol4ab83t"
+
+[sub_resource type="Resource" id="Resource_dh1di"]
+script = ExtResource("6_t3v11")
+buildingName = "Weapon Shop"
+buildingIndex = 25
+spaceIndex = 10
+buildingTransparentIndex = 26
+eastTransparencyRange = 1
+westTransparencyRange = 1
+northTransparencyRange = 1
+southTransparencyRange = 1
+metadata/_custom_type_script = "uid://cvvuaol4ab83t"
+
+[sub_resource type="Resource" id="Resource_a77cv"]
+script = ExtResource("6_t3v11")
+buildingName = "Magic Shop"
+buildingIndex = 27
+spaceIndex = 9
+buildingTransparentIndex = 28
+eastTransparencyRange = 1
+westTransparencyRange = 1
+northTransparencyRange = 1
+southTransparencyRange = 1
+metadata/_custom_type_script = "uid://cvvuaol4ab83t"
+
+[sub_resource type="Resource" id="Resource_oqiq5"]
+script = ExtResource("2_xtm7o")
+name = "Grass"
+description = "Grass 1"
+
+[sub_resource type="Resource" id="Resource_2s5u7"]
+script = ExtResource("7_tglrv")
+environmentSpace = SubResource("Resource_oqiq5")
+width = 14
+height = 12
+minProps = 0
+maxProps = 0
+propList = Array[ExtResource("8_m55yq")]([])
+
+[sub_resource type="Resource" id="Resource_j5w1h"]
+script = ExtResource("2_xtm7o")
+name = "Snow"
+description = "Snow"
+
+[sub_resource type="Resource" id="Resource_wwjqx"]
+script = ExtResource("7_tglrv")
+environmentSpace = SubResource("Resource_j5w1h")
+width = 14
+height = 12
+minProps = 0
+maxProps = 0
+propList = Array[ExtResource("8_m55yq")]([])
+
+[sub_resource type="Resource" id="Resource_dukce"]
+script = ExtResource("2_xtm7o")
+name = "Lava"
+description = "Lava"
+
+[sub_resource type="Resource" id="Resource_ujoey"]
+script = ExtResource("7_tglrv")
+environmentSpace = SubResource("Resource_dukce")
+width = 14
+height = 12
+minProps = 0
+maxProps = 0
+propList = Array[ExtResource("8_m55yq")]([])
+
+[sub_resource type="Resource" id="Resource_nyi0q"]
+script = ExtResource("2_xtm7o")
+name = "Swamp"
+description = "Swamp"
+
+[sub_resource type="Resource" id="Resource_1wbo3"]
+script = ExtResource("7_tglrv")
+environmentSpace = SubResource("Resource_nyi0q")
+width = 14
+height = 12
+minProps = 0
+maxProps = 0
+propList = Array[ExtResource("8_m55yq")]([])
+
+[sub_resource type="Resource" id="Resource_cu6l5"]
+script = ExtResource("2_xtm7o")
+name = "Thunder"
+description = "Thunder"
+
+[sub_resource type="Resource" id="Resource_tmvh5"]
+script = ExtResource("7_tglrv")
+environmentSpace = SubResource("Resource_cu6l5")
+width = 14
+height = 12
+minProps = 0
+maxProps = 0
+propList = Array[ExtResource("8_m55yq")]([])
+
+[sub_resource type="Resource" id="Resource_77smy"]
+script = ExtResource("2_xtm7o")
+name = "Cloud"
+description = "Cloud"
+
+[sub_resource type="Resource" id="Resource_a4gbn"]
+script = ExtResource("7_tglrv")
+environmentSpace = SubResource("Resource_77smy")
+width = 14
+height = 12
+minProps = 0
+maxProps = 0
+propList = Array[ExtResource("8_m55yq")]([])
+
+[node name="AceBoardGenerator" type="Node3D" node_paths=PackedStringArray("spaceEditor", "regionEditor", "buildingEditor")]
+script = ExtResource("1_8srbc")
+meshLibrary = ExtResource("2_a30kb")
+spaceEditor = NodePath("SpaceEditor")
+regionEditor = NodePath("RegionEditor")
+buildingEditor = NodePath("SpaceEditor/BuildingEditor")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_iym0q")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="SpaceEditor" parent="." instance=ExtResource("7_wlttv")]
+environmentTileIndices = Array[int]([0, 1, 2, 3, 4, 5])
+normalSpace = SubResource("Resource_2qk1i")
+
+[node name="SpecialSpaceEditor" parent="SpaceEditor" index="0"]
+specialSpaces = Array[ExtResource("3_w5n17")]([SubResource("Resource_en5gw"), SubResource("Resource_yl1in"), SubResource("Resource_rwje2"), SubResource("Resource_ym0f8")])
+
+[node name="BuildingEditor" parent="SpaceEditor" index="1"]
+buildings = Array[ExtResource("6_t3v11")]([SubResource("Resource_t3v11"), SubResource("Resource_2yep5"), SubResource("Resource_dh1di"), SubResource("Resource_a77cv")])
+
+[node name="RegionEditor" parent="." instance=ExtResource("5_rhxxi")]
+mapWidth = 3
+mapHeight = 2
+subRegionOffset = 2
+regions = Array[ExtResource("7_tglrv")]([SubResource("Resource_2s5u7"), SubResource("Resource_wwjqx"), SubResource("Resource_ujoey"), SubResource("Resource_1wbo3"), SubResource("Resource_tmvh5"), SubResource("Resource_a4gbn")])
+
+[node name="Navigation" type="Node3D" parent="." node_paths=PackedStringArray("player", "gridMap", "spaceEditor", "regionEditor")]
+script = ExtResource("9_f5t12")
+player = NodePath("../BoardDemoCharacter")
+gridMap = NodePath("../GridMap")
+spaceEditor = NodePath("../SpaceEditor")
+regionEditor = NodePath("../RegionEditor")
+draw_nav_cubes = true
+metadata/_custom_type_script = "uid://b2vt55kv6yjfr"
+
+[node name="GridMap" type="GridMap" parent="."]
+mesh_library = ExtResource("2_a30kb")
+cell_size = Vector3(1, 1, 1)
+
+[node name="GridMap" type="GridMap" parent="GridMap"]
+mesh_library = ExtResource("10_t3v11")
+cell_size = Vector3(1, 1, 1)
+
+[node name="BoardDemoCharacter" parent="." node_paths=PackedStringArray("gridMap", "spaceEditor") instance=ExtResource("10_iym0q")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 2.5, 1, 2.5)
+tileMapOffset = Vector3(0.5, 0, 0.5)
+movement_mode = 1
+gridMap = NodePath("../GridMap")
+spaceEditor = NodePath("../SpaceEditor")
+
+[node name="Obstacles" type="Node3D" parent="."]
+
+[editable path="SpaceEditor"]
+[editable path="BoardDemoCharacter"]

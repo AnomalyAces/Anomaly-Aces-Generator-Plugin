@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://34uokap28a11"]
+
+[ext_resource type="Script" uid="uid://b2vt55kv6yjfr" path="res://addons/anomalyAcesGenerator/BoardGenerator/scenes/NavigationScenes/BoardNavigationController/board_navigation_controller.gd" id="1_s23s2"]
+
+[sub_resource type="Curve3D" id="Curve3D_s23s2"]
+
+[node name="NavigationController" type="Node3D"]
+script = ExtResource("1_s23s2")
+
+[node name="Path3DNavigation" type="Path3D" parent="."]
+curve = SubResource("Curve3D_s23s2")
+
+[node name="Path3DNavigationFollow" type="PathFollow3D" parent="Path3DNavigation"]
+loop = false
+
+[node name="Path3DNavigationMarker" type="Marker3D" parent="Path3DNavigation/Path3DNavigationFollow"]
+gizmo_extents = 1.02

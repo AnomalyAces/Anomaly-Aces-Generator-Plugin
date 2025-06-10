@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://b1v6ubve7frus"]
 
-[ext_resource type="Script" path="res://addons/anomalyAcesGenerator/Characters/Demo/demo_character.gd" id="1_p3mul"]
-[ext_resource type="Script" path="res://addons/anomalyAcesGenerator/Characters/Demo/demo_character_raycast_3d.gd" id="2_hv17r"]
+[ext_resource type="Script" uid="uid://v1lvt7wuwebq" path="res://addons/anomalyAcesGenerator/Characters/Demo/demo_character.gd" id="1_p3mul"]
+[ext_resource type="Script" uid="uid://d2bua35ajbks5" path="res://addons/anomalyAcesGenerator/Characters/Util/character_raycast_3d.gd" id="2_hv17r"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_4s7hy"]
 

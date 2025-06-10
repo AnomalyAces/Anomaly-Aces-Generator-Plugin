@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bjclmblvqa3vu"]
+
+[ext_resource type="Script" uid="uid://bcwnasgf3a1l3" path="res://addons/anomalyAcesGenerator/BoardGenerator/editors/BuildingEditor/building_editor.gd" id="1_yo2qb"]
+
+[node name="BuildingEditor" type="Node"]
+script = ExtResource("1_yo2qb")

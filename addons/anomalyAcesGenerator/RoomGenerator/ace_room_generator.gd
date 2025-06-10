@@ -1,5 +1,5 @@
 @tool
-@icon("res://addons/anomalyAcesGenerator/AceRoomGenerator.svg")
+@icon("res://addons/anomalyAcesGenerator/RoomGenerator/AceRoomGenerator.svg")
 extends Node3D
 
 const ROOM_TILE:int = 0
@@ -178,7 +178,7 @@ func _filter_room_directions(room: Room) -> Array[String]:
 	directions.append_array(temp_array)
 	return directions
 
-func _get_start_pos(character: Character) -> Vector3i:	
+func _get_start_pos(character: AceCharacter3D) -> Vector3i:	
 	var map_position = grid_map.local_to_map(character.position)
 	
 	print("Character Position: %s" % character.position)
@@ -189,7 +189,7 @@ func _get_start_pos(character: Character) -> Vector3i:
 
 
 
-func _get_current_room(character: Character) -> Room:
+func _get_current_room(character: AceCharacter3D) -> Room:
 	var map_position = grid_map.local_to_map(character.position)
 	
 	print("Character Position: %s" % character.position)

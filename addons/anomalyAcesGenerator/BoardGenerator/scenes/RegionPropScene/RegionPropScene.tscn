@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bk1tottlyvgdm"]
+
+[ext_resource type="Script" uid="uid://e5wr41k1be2f" path="res://addons/anomalyAcesGenerator/BoardGenerator/scenes/RegionPropScene/region_prop_scene.gd" id="1_ujk6a"]
+
+[node name="RegionPropScene" type="Sprite3D"]
+script = ExtResource("1_ujk6a")

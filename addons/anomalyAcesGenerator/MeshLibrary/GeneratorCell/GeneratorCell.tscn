@@ -1,7 +1,7 @@
 [gd_scene load_steps=38 format=4 uid="uid://csn7brnf4x5gy"]
 
-[ext_resource type="Script" path="res://addons/anomalyAcesGenerator/MeshLibrary/GeneratorCell/generator_cell.gd" id="1_q0udp"]
-[ext_resource type="Script" path="res://addons/anomalyAcesGenerator/MeshLibrary/Door/door.gd" id="2_5sffm"]
+[ext_resource type="Script" uid="uid://naq7ydgx3ggi" path="res://addons/anomalyAcesGenerator/MeshLibrary/GeneratorCell/generator_cell.gd" id="1_q0udp"]
+[ext_resource type="Script" uid="uid://bvry3t1hulu6w" path="res://addons/anomalyAcesGenerator/MeshLibrary/Door/door.gd" id="2_5sffm"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6y11q"]
 resource_name = "texture.033"
@@ -373,15 +373,15 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_sbsa5"]
 _data = {
-"RESET": SubResource("Animation_1y8ap"),
-"east_door_close": SubResource("Animation_o2toi"),
-"east_door_open": SubResource("Animation_oljxc"),
-"north_door_close": SubResource("Animation_i6i4g"),
-"north_door_open": SubResource("Animation_wtifa"),
-"south_door_close": SubResource("Animation_t0t13"),
-"south_door_open": SubResource("Animation_gg62y"),
-"west_door_close": SubResource("Animation_lgtyd"),
-"west_door_open": SubResource("Animation_7vq1t")
+&"RESET": SubResource("Animation_1y8ap"),
+&"east_door_close": SubResource("Animation_o2toi"),
+&"east_door_open": SubResource("Animation_oljxc"),
+&"north_door_close": SubResource("Animation_i6i4g"),
+&"north_door_open": SubResource("Animation_wtifa"),
+&"south_door_close": SubResource("Animation_t0t13"),
+&"south_door_open": SubResource("Animation_gg62y"),
+&"west_door_close": SubResource("Animation_lgtyd"),
+&"west_door_open": SubResource("Animation_7vq1t")
 }
 
 [node name="GeneratorCell" type="Node3D"]
