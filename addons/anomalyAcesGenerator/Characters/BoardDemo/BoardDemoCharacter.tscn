@@ -1,7 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://sbwywnr30fp5"]
+[gd_scene load_steps=25 format=3 uid="uid://sbwywnr30fp5"]
 
 [ext_resource type="Script" uid="uid://cbodwkhpl33g2" path="res://addons/anomalyAcesGenerator/Characters/BoardDemo/board_demo_character.gd" id="1_u7pho"]
 [ext_resource type="Script" uid="uid://d2bua35ajbks5" path="res://addons/anomalyAcesGenerator/Characters/Util/character_raycast_3d.gd" id="2_iwkte"]
+[ext_resource type="Script" uid="uid://buy7kfocw05xw" path="res://addons/anomalyAcesInputMap/AceInputMap/ace_input_map.gd" id="2_m7j0t"]
+[ext_resource type="PackedScene" uid="uid://bfydkm21qb8tx" path="res://addons/anomalyAcesCamera/AceCamera3D/AceCamera3D.tscn" id="3_iwkte"]
+[ext_resource type="PackedScene" uid="uid://derlkvs7if2fo" path="res://addons/anomalyAcesSprite/AceSprite3D/AceSprite3D.tscn" id="4_nbp3d"]
+[ext_resource type="Script" uid="uid://cifrd40vj7ln4" path="res://addons/anomalyAcesSprite/AceSprite3D/SpriteData/ace_sprite_data.gd" id="6_r8ybi"]
+[ext_resource type="PackedScene" uid="uid://ddf8ko8nxep64" path="res://addons/anomalyAcesCharacter/AceCharacterInput/AceCharacterBoardInput/AceCharacterBoardInput.tscn" id="6_tdwhc"]
+[ext_resource type="Script" uid="uid://d05eh8af8ek4q" path="res://addons/anomalyAcesSprite/AceSprite3D/SpriteData/ace_sprite_animation_data.gd" id="7_wfetd"]
+[ext_resource type="Shader" uid="uid://cllr2ujl85d54" path="res://addons/anomalyAcesSprite/AceSprite3D/Shaders/color_change.gdshader" id="8_8ec2w"]
+[ext_resource type="PackedScene" uid="uid://54yyvhi7vla1" path="res://addons/anomalyAcesCharacter/AceCharacterInput/AceCharacterFreeInput/AceCharacterFreeInput.tscn" id="8_picyn"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_nbp3d"]
 
@@ -10,26 +18,180 @@ albedo_color = Color(0.95484, 0.194842, 0.945977, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_utlkp"]
 
-[node name="BoardDemoCharacter" type="CharacterBody3D"]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+[sub_resource type="Resource" id="Resource_nyvec"]
+script = ExtResource("7_wfetd")
+animation_name = "Walk North"
+start_frame = 105
+end_frame = 112
+duration = 1.0
+loop_mode = 1
+interpolation_type = 0
+metadata/_custom_type_script = "uid://d05eh8af8ek4q"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_l8fx7"]
+load_path = "res://.godot/imported/grayscale.png-fa1520851e5c527cdeba9c6bb81dee35.s3tc.ctex"
+
+[sub_resource type="Resource" id="Resource_et5qv"]
+script = ExtResource("6_r8ybi")
+spriteName = "Body"
+spriteSheet = SubResource("CompressedTexture2D_l8fx7")
+hFrames = 13
+vFrames = 54
+billboard = 1
+render_priority = 0
+animations = Array[ExtResource("7_wfetd")]([SubResource("Resource_nyvec")])
+mainColor = Color(0.214876, 0.109447, 0.0692834, 1)
+highlightColor = Color(0.45098, 0.333333, 0.290196, 1)
+metadata/_custom_type_script = "uid://cifrd40vj7ln4"
+
+[sub_resource type="Resource" id="Resource_wt552"]
+script = ExtResource("7_wfetd")
+animation_name = "Walk North"
+start_frame = 105
+end_frame = 112
+duration = 1.0
+loop_mode = 1
+interpolation_type = 0
+metadata/_custom_type_script = "uid://d05eh8af8ek4q"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_meo6s"]
+load_path = "res://.godot/imported/lpc_eyes.png-3c30e69ab85db6bc007daae029d0b0d4.s3tc.ctex"
+
+[sub_resource type="Resource" id="Resource_k7uxx"]
+script = ExtResource("6_r8ybi")
+spriteName = "Eyes"
+spriteSheet = SubResource("CompressedTexture2D_meo6s")
+hFrames = 13
+vFrames = 21
+billboard = 1
+render_priority = 1
+animations = Array[ExtResource("7_wfetd")]([SubResource("Resource_wt552")])
+mainColor = Color(0, 0, 0, 1)
+highlightColor = Color(0, 0, 0, 1)
+metadata/_custom_type_script = "uid://cifrd40vj7ln4"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_w6op7"]
+load_path = "res://.godot/imported/lpc_hair_afro.png-8bb2f83ea909c574a4350bd3ebfc272d.s3tc.ctex"
+
+[sub_resource type="Resource" id="Resource_3nkyy"]
+script = ExtResource("6_r8ybi")
+spriteName = "Hair"
+spriteSheet = SubResource("CompressedTexture2D_w6op7")
+hFrames = 13
+vFrames = 21
+billboard = 1
+render_priority = 2
+animations = Array[ExtResource("7_wfetd")]([SubResource("Resource_wt552")])
+mainColor = Color(0.175335, 0.622196, 0.110596, 1)
+highlightColor = Color(0.169343, 0.42193, 0.20037, 1)
+metadata/_custom_type_script = "uid://cifrd40vj7ln4"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r8ybi"]
+render_priority = 0
+shader = ExtResource("8_8ec2w")
+shader_parameter/grayscaleTexture = SubResource("CompressedTexture2D_l8fx7")
+shader_parameter/outlineColor = Color(0, 0, 0, 1)
+shader_parameter/mainColor = Color(0.214876, 0.109447, 0.0692834, 1)
+shader_parameter/highlightColor = Color(0.45098, 0.333333, 0.290196, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wfetd"]
+render_priority = 1
+shader = ExtResource("8_8ec2w")
+shader_parameter/grayscaleTexture = SubResource("CompressedTexture2D_meo6s")
+shader_parameter/outlineColor = Color(0, 0, 0, 1)
+shader_parameter/mainColor = Color(0, 0, 0, 1)
+shader_parameter/highlightColor = Color(0, 0, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8ec2w"]
+render_priority = 2
+shader = ExtResource("8_8ec2w")
+shader_parameter/grayscaleTexture = SubResource("CompressedTexture2D_w6op7")
+shader_parameter/outlineColor = Color(0, 0, 0, 1)
+shader_parameter/mainColor = Color(0.175335, 0.622196, 0.110596, 1)
+shader_parameter/highlightColor = Color(0.169343, 0.42193, 0.20037, 1)
+
+[node name="BoardDemoCharacter" type="CharacterBody3D" node_paths=PackedStringArray("sprite", "camera", "inputMap", "inputTypes")]
 script = ExtResource("1_u7pho")
-south_input = "move_down"
+sprite = NodePath("AceSprite3D")
+camera = NodePath("AceCamera3D")
+gravity = 9.8
+inputMap = NodePath("AceInputMap")
+inputTypes = {
+0: NodePath("AceCharacterFreeInput"),
+1: NodePath("AceCharacterBoardInput")
+}
+
+[node name="AceInputMap" type="Node" parent="."]
+script = ExtResource("2_m7j0t")
+north_input = "move_forward"
+east_input = "move_right"
+south_input = "move_backward"
 west_input = "move_left"
+metadata/_custom_type_script = "uid://buy7kfocw05xw"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
 mesh = SubResource("BoxMesh_nbp3d")
 surface_material_override/0 = SubResource("StandardMaterial3D_m7j0t")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_utlkp")
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 10, 0)
-current = true
-
 [node name="RayCast3D" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+transform = Transform3D(-4.37114e-08, -1, 4.37114e-08, 0, -4.37114e-08, -1, 1, -4.37114e-08, 1.91069e-15, 0, 0, 0)
 collision_mask = 3
 debug_shape_custom_color = Color(0, 0.0859375, 1, 1)
 debug_shape_thickness = 5
 script = ExtResource("2_iwkte")
+
+[node name="AceCamera3D" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("3_iwkte")]
+physics_interpolation_mode = 1
+transform = Transform3D(1, 0, 0, 0, 0.913546, 0.406737, 0, -0.406737, 0.913546, 0, 1.5, 1.5)
+follow_target = NodePath("..")
+
+[node name="AceSprite3D" parent="." instance=ExtResource("4_nbp3d")]
+spriteData = Array[ExtResource("6_r8ybi")]([SubResource("Resource_et5qv"), SubResource("Resource_k7uxx"), SubResource("Resource_3nkyy")])
+
+[node name="Body" parent="AceSprite3D/Sprites" index="0"]
+material_override = SubResource("ShaderMaterial_r8ybi")
+billboard = 1
+shaded = true
+alpha_cut = 1
+texture_filter = 0
+texture = SubResource("CompressedTexture2D_l8fx7")
+hframes = 13
+vframes = 54
+
+[node name="Eyes" parent="AceSprite3D/Sprites" index="1"]
+sorting_offset = 1.0
+material_override = SubResource("ShaderMaterial_wfetd")
+billboard = 1
+shaded = true
+alpha_cut = 1
+texture_filter = 0
+render_priority = 1
+texture = SubResource("CompressedTexture2D_meo6s")
+hframes = 13
+vframes = 21
+
+[node name="Hair" parent="AceSprite3D/Sprites" index="2"]
+sorting_offset = 2.0
+material_override = SubResource("ShaderMaterial_8ec2w")
+billboard = 1
+shaded = true
+alpha_cut = 1
+texture_filter = 0
+render_priority = 2
+texture = SubResource("CompressedTexture2D_w6op7")
+hframes = 13
+vframes = 21
+
+[node name="AceCharacterBoardInput" parent="." node_paths=PackedStringArray("character", "input_map") instance=ExtResource("6_tdwhc")]
+character = NodePath("..")
+input_map = NodePath("../AceInputMap")
+
+[node name="AceCharacterFreeInput" parent="." node_paths=PackedStringArray("character", "input_map") instance=ExtResource("8_picyn")]
+character = NodePath("..")
+input_map = NodePath("../AceInputMap")
+
+[editable path="AceSprite3D"]

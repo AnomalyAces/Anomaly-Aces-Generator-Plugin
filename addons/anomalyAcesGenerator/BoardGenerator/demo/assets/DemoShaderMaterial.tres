@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://0du7bort7ww8"]
+
+[ext_resource type="Shader" uid="uid://cllr2ujl85d54" path="res://addons/anomalyAcesSprite/AceSprite3D/Shaders/color_change.gdshader" id="1_hb76d"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_hb76d")
+shader_parameter/outlineColor = Color(0, 0, 0, 1)
+shader_parameter/mainColor = Color(0.140201, 0.0578091, 0.028148, 1)
+shader_parameter/highlightColor = Color(0.452479, 0.334264, 0.291706, 1)

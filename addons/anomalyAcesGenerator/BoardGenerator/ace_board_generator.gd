@@ -2,30 +2,55 @@
 @icon("res://addons/anomalyAcesGenerator/BoardGenerator/AceBoardGenerator.svg")
 class_name AceBoardGenerator extends Node3D
 
+### Signals ####
+signal board_generated
+signal viewport_changed(spacesInView: Array[BoardGeneratorGridUtil.GridPOI])
+signal camera_mode_changed(cameraMode: AceCameraManager.CAMERA_MODE)
+################
+
 @export var generate:bool = false : set = set_generate
-@export_group("Mesh Library")
 ##Mesh Library Containing All the Spaces, Buildings and Props
 @export var meshLibrary: MeshLibrary = null :
 	set(p_meshLib):
 		if p_meshLib != meshLibrary:
 			meshLibrary = p_meshLib
 			update_configuration_warnings()
-@export_group("Editors")
-## Configures Spaces and Buildings
-@export var spaceEditor: SpaceEditor
-@export var regionEditor: RegionEditor : 
-	set(p_regionEditor):
-		print("Region Editor updated")
-		#if regionEditor != null && regionEditor.editor_updated.is_connected(_region_editor_updated):
-			#regionEditor.editor_updated.disconnect(_region_editor_updated)
-		regionEditor = p_regionEditor
-		#regionEditor.editor_updated.connect(_region_editor_updated)
-@export var buildingEditor: BuildingEditor :
-	set(p_buildingEditor):
-		print("Building Editor updated")
-		buildingEditor = p_buildingEditor
+
+@export_category("Cameras")
+@export var cameraManager: AceCameraManager = null :
+	set(p_camManager):
+		if p_camManager != cameraManager:
+			cameraManager = p_camManager
+			update_configuration_warnings()
+
+## Camera Dolly that chooses the camera that pans the grid map
+@export var cameraDolly: AceCameraDolly = null :
+	set(p_dolly):
+		if p_dolly != cameraDolly:
+			cameraDolly = p_dolly
+			update_configuration_warnings()
+
+@export_category("Players")
+# Player controlled by the app owner
+@export var character: AceCharacter3D :
+	set(p_character):
+		if p_character != character:
+			character = p_character
+			_assign_character_to_nodes()
+			update_configuration_warnings()
+# Other players connecting over the network
+@export var remoteCharacters: Array[AceCharacter3D] :
+	set(p_remotes):
+		if p_remotes != remoteCharacters:
+			remoteCharacters = p_remotes
+			update_configuration_warnings()
 		
 
+## Space Editor
+@onready var spaceEditor: SpaceEditor = $SpaceEditor
+
+## Region Editor
+@onready var regionEditor: RegionEditor = $RegionEditor
 
 ## Navigation Controller
 @onready var navigation: BoardNavigationController = $Navigation
@@ -33,12 +58,16 @@ class_name AceBoardGenerator extends Node3D
 ## GridMap
 @onready var gridMap: GridMap = $GridMap
 
-## Player
-##TODO: This will need to be updated to handle all players
-@onready var character: BoardDemoCharacter = $BoardDemoCharacter
-
 #Obstacles Parent
 @onready var obstacles: Node3D = $Obstacles
+
+## Grid Map Variables
+# Lowest coordinate on the grid
+var _min_grid_coord: Vector3i = Vector3i.ZERO
+# Highest coordinate on the grid
+var _max_grid_coord: Vector3i = Vector3i.MAX
+# Dictionary of special spaces for easy access
+var _space_dict: Dictionary[Space, BoardGeneratorGridUtil.Vector3iArray] = {}
 
 
 #Setters
@@ -52,24 +81,42 @@ func set_generate(_val:bool)->void:
 		gridMap.mesh_library = meshLibrary
 		generate_board()
 		navigation.build_navigation()
+# 
+# #Signals
+# func _region_editor_updated(editor: RegionEditor):
+# 	print("Ace Generator Updating Region Editor...")
+# 	regionEditor = editor
 
-#Signals
-func _region_editor_updated(editor: RegionEditor):
-	print("Ace Generator Updating Region Editor...")
-	regionEditor = editor
+func _assign_character_to_nodes():
+	if navigation != null:
+		navigation.player = character
+	if cameraManager != null:
+		cameraManager.playerCameras3D.clear()
+		cameraManager.playerCameras3D.append(character.camera)
 
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings: PackedStringArray
 	
 	if meshLibrary == null:
 		warnings.append("Mesh Library Not Defined")
+	if cameraManager == null:
+		warnings.append("Camera Manager of type AceCameraManager Not Defined")
+	if cameraDolly == null:
+		warnings.append("Camera Dolly of type AceCameraDolly Not Defined")
+	if character == null:
+		warnings.append("Character of type AceCharacter3D Not Defined")
+	if remoteCharacters == null || remoteCharacters.size() == 0:
+		warnings.append("Remote Characters of type Array[AceCharacter3D] Not Defined or Empty")
+	else:
+		for i in remoteCharacters.size():
+			if remoteCharacters[i] == null:
+				warnings.append("Remote Player %d is null" % i)
 	
 	return warnings
 
 func _ready() -> void:
-	#TODO: Set this position to the position of the DivinerHQ Space
-	character.position = Vector3(2,1,2) + character.tileMapOffset
 	self.set_editable_instance(spaceEditor, true)
+	get_parent().set_editable_instance(self, true)
 	gridMap.clear()
 	for node in obstacles.get_children():
 			if node is BoardNavigationObstacle:
@@ -77,8 +124,19 @@ func _ready() -> void:
 	gridMap.mesh_library = meshLibrary
 	if Engine.is_editor_hint():
 		return
+	
+	#Attach signals
+	cameraDolly.world_position_in_view.connect(_on_viewport_change)
+	cameraManager.camera_mode_changed.connect(_on_camera_mode_changed)
+
+	#TODO: Set this position to the position of the DivinerHQ Space
+	character.position = Vector3(2,1.25,2) + character.tileMapOffset
+	cameraDolly.position = Vector3(2,1.25,2)
+	
 	generate_board()
 	navigation.build_navigation()
+	board_generated.emit()
+	cameraManager.set_camera_mode(AceCameraManager.CAMERA_MODE.PLAYER)
 	
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -117,12 +175,50 @@ func _unhandled_input(event: InputEvent) -> void:
 		else:
 			navigation.add_obstacle(space)
 		
-		
+################################
+## Signal Handlers
+################################
+
+## Handles when the coordinates in the viewport change
+func _on_viewport_change(minCoordIntersection: ViewportWorldIntersection3D, maxCoordIntersection: ViewportWorldIntersection3D) -> void:
+	print("--- VIEWPORT CHANGE ---")
+	print("minCoordIntersection: %s" % ["null" if minCoordIntersection.is_empty() else minCoordIntersection.position ])
+	print("minCoordIntersection Target: %s" % ["null" if minCoordIntersection.is_empty() || minCoordIntersection.collider == null  else minCoordIntersection.collider.name] )
+	print("maxCoordIntersection: %s" % ["null" if maxCoordIntersection.is_empty() else maxCoordIntersection.position] )
+	print("maxCoordIntersection Target: %s" % ["null" if maxCoordIntersection.is_empty()  || maxCoordIntersection.collider == null  else maxCoordIntersection.collider.name] )
+	print("----------------------")
+	
+	var minWorldCoord: Vector3 = _min_grid_coord if minCoordIntersection.is_empty() else minCoordIntersection.position
+	var maxWorldCoord: Vector3 = _max_grid_coord if maxCoordIntersection.is_empty() else maxCoordIntersection.position
+
+	var minGridCoord: Vector3i = gridMap.local_to_map(minWorldCoord.round())
+	var maxGridCoord: Vector3i = gridMap.local_to_map(maxWorldCoord.round())
+
+	print("--- GRID MAP SPACES IN VIEW ---")
+	print("Min Coord: %s" % minGridCoord)
+	print("Max Coord: %s" % maxGridCoord)
+	var spaces_in_view: Array[BoardGeneratorGridUtil.GridPOI] = _get_spaces_in_viewport(minGridCoord, maxGridCoord)
+	viewport_changed.emit(spaces_in_view)
+	print("-------------------------------")
+
+
+
+func _on_camera_mode_changed(cameraMode: AceCameraManager.CAMERA_MODE) -> void:
+	camera_mode_changed.emit(cameraMode)
+
+
+
+################################
 
 func generate_board() -> void:
 	#Place Environmetal Tiles
 	var rows: int = _calculate_cols()
 	var columns: int = _calculate_rows()
+
+	#Now that we have the # of rows and columns set the max coordinate of the grid
+	_max_grid_coord = Vector3i(rows, 0, columns)
+
+	#Place Normal Spaces and Environmental Spaces
 	for row in range(0, rows):
 		for col in range(0, columns):
 			var region: Region = _find_region(regionEditor.regions, row, col)
@@ -131,8 +227,8 @@ func generate_board() -> void:
 					BoardGeneratorGridUtil.setSpaceByName(gridMap, spaceEditor.normalSpace, Vector3i(row, 0, col))
 				else:
 					BoardGeneratorGridUtil.setSpaceByName(gridMap, region.environmentSpace, Vector3i(row, 0, col))
-	#Place Normal Spaces
-	_place_normal_spaces()
+	#Connec Regions With Normal Spaces
+	_connect_normal_space_regions()
 	
 	#Place Special Spaces
 	_place_special_spaces()
@@ -140,7 +236,9 @@ func generate_board() -> void:
 	#Place Buildings
 	_place_buildings()
 	
-	
+
+func set_camera_dolly_input(enabled: bool) -> void:
+	cameraDolly.cameraEnabled = enabled
 
 func _calculate_rows() -> int:
 	var maxHeight = 0
@@ -182,7 +280,7 @@ func _find_region(regionArr: Array[Region], row: int, col: int ) -> Region:
 	else:
 		return null
 
-func _place_normal_spaces():
+func _connect_normal_space_regions():
 	for r in range(regionEditor.mapHeight):
 		for c in range(regionEditor.mapWidth):
 			var region: Region = regionEditor.regionMap[r][c]
@@ -254,6 +352,7 @@ func _place_singleton_special_spaces(normal_spaces: Array[Vector3i]):
 		#Select Space for Singleton
 		var target_space: Vector3i = normal_spaces.pop_back()
 		BoardGeneratorGridUtil.setSpaceByName(gridMap, singleton, target_space, Enum.Orientation3D.ROTATE_Y_0)
+		BoardGeneratorGridUtil.add_vector3i_to_space_dict(_space_dict,singleton, target_space)
 
 func _place_regional_special_spaces(normal_spaces: Array[Vector3i]):
 	
@@ -302,6 +401,7 @@ func _place_regional_special_spaces(normal_spaces: Array[Vector3i]):
 		regional_spaces.shuffle()
 		for i in range(regional_spaces.size()):
 			BoardGeneratorGridUtil.setSpaceByName(gridMap, regional_spaces[i], region_dict.get(region_id)[i], Enum.Orientation3D.ROTATE_Y_0)
+			BoardGeneratorGridUtil.add_vector3i_to_space_dict(_space_dict,regional_spaces[i], region_dict.get(region_id)[i])
 	
 	
 	#Return all unused spaces to the normal array
@@ -323,7 +423,7 @@ func _is_south(chosen_space: Vector3i, special_spaces: Array[SpecialSpace]):
 		
 
 func _place_buildings():
-	var building_arr: Array[Building] = buildingEditor.buildings
+	var building_arr: Array[Building] = spaceEditor.buildingEditor.buildings
 	
 	for building in building_arr:
 		print("Placing %s building" % building.buildingName)
@@ -361,3 +461,25 @@ func _get_building_space(target: Vector3i, building_tile_id: int):
 		return
 	
 	return Vector3.ZERO
+
+
+func _get_spaces_in_viewport(minLoc: Vector3i, maxLoc: Vector3i) -> Array[BoardGeneratorGridUtil.GridPOI]:
+	var spaces_in_view: Array[BoardGeneratorGridUtil.GridPOI] = []
+
+	for space in _space_dict:
+		var space_locs: BoardGeneratorGridUtil.Vector3iArray = _space_dict[space]
+		var space_locs_in_view: Array[Vector3i] = space_locs.array.filter(
+			func(vect: Vector3i): return vect.x >= minLoc.x && vect.x <= maxLoc.x && vect.z >= minLoc.z && vect.z <= maxLoc.z
+		)
+
+		for loc in space_locs_in_view:
+			var grid_POI: BoardGeneratorGridUtil.GridPOI = BoardGeneratorGridUtil.GridPOI.new()
+			grid_POI.space = space
+			grid_POI.location = loc
+
+			spaces_in_view.append(grid_POI)
+
+
+
+
+	return spaces_in_view

@@ -1,0 +1,118 @@
+[gd_scene load_steps=11 format=3 uid="uid://deg5jvy47qgqb"]
+
+[ext_resource type="PackedScene" uid="uid://60hgaq0k2wo4" path="res://addons/anomalyAcesGenerator/BoardGenerator/AceBoardGenerator.tscn" id="1_5yana"]
+[ext_resource type="Script" uid="uid://hdffl4y6ffxg" path="res://addons/anomalyAcesGenerator/BoardGenerator/demo/board_demo.gd" id="1_5yost"]
+[ext_resource type="PackedScene" uid="uid://sbwywnr30fp5" path="res://addons/anomalyAcesGenerator/Characters/BoardDemo/BoardDemoCharacter.tscn" id="2_1tjlm"]
+[ext_resource type="Shader" uid="uid://cllr2ujl85d54" path="res://addons/anomalyAcesSprite/AceSprite3D/Shaders/color_change.gdshader" id="5_b4jhq"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_l8fx7"]
+load_path = "res://.godot/imported/grayscale.png-fa1520851e5c527cdeba9c6bb81dee35.s3tc.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dd0ex"]
+render_priority = 0
+shader = ExtResource("5_b4jhq")
+shader_parameter/grayscaleTexture = SubResource("CompressedTexture2D_l8fx7")
+shader_parameter/outlineColor = Color(0, 0, 0, 1)
+shader_parameter/mainColor = Color(0.214876, 0.109447, 0.0692834, 1)
+shader_parameter/highlightColor = Color(0.45098, 0.333333, 0.290196, 1)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_meo6s"]
+load_path = "res://.godot/imported/lpc_eyes.png-3c30e69ab85db6bc007daae029d0b0d4.s3tc.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_l8jg3"]
+render_priority = 1
+shader = ExtResource("5_b4jhq")
+shader_parameter/grayscaleTexture = SubResource("CompressedTexture2D_meo6s")
+shader_parameter/outlineColor = Color(0, 0, 0, 1)
+shader_parameter/mainColor = Color(0, 0, 0, 1)
+shader_parameter/highlightColor = Color(0, 0, 0, 1)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_w6op7"]
+load_path = "res://.godot/imported/lpc_hair_afro.png-8bb2f83ea909c574a4350bd3ebfc272d.s3tc.ctex"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5yost"]
+render_priority = 2
+shader = ExtResource("5_b4jhq")
+shader_parameter/grayscaleTexture = SubResource("CompressedTexture2D_w6op7")
+shader_parameter/outlineColor = Color(0, 0, 0, 1)
+shader_parameter/mainColor = Color(0.175335, 0.622196, 0.110596, 1)
+shader_parameter/highlightColor = Color(0.169343, 0.42193, 0.20037, 1)
+
+[node name="BoardDemo" type="Node3D"]
+script = ExtResource("1_5yost")
+
+[node name="AceBoardGenerator" parent="." node_paths=PackedStringArray("character") instance=ExtResource("1_5yana")]
+character = NodePath("../BoardDemoCharacter")
+
+[node name="AceCameraManager" parent="AceBoardGenerator" index="0" node_paths=PackedStringArray("playerCameras3D")]
+playerCameras3D = [NodePath("../../BoardDemoCharacter/AceCamera3D")]
+
+[node name="Navigation" parent="AceBoardGenerator" index="3" node_paths=PackedStringArray("player")]
+player = NodePath("../../BoardDemoCharacter")
+draw_nav_cubes = false
+
+[node name="AceCameraDefaultDolly" parent="AceBoardGenerator" index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.25, 2)
+minElevationAngle = 5
+minZoom = 2
+
+[node name="BoardDemoCharacter" parent="." node_paths=PackedStringArray("inputTypes", "gridMap", "spaceEditor") instance=ExtResource("2_1tjlm")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.5, 0, 0.5)
+movementMode = 1
+inputTypes = {
+0: NodePath("AceCharacterFreeInput"),
+1: NodePath("AceCharacterBoardInput")
+}
+gridMap = NodePath("../AceBoardGenerator/GridMap")
+spaceEditor = NodePath("../AceBoardGenerator/SpaceEditor")
+
+[node name="RayCast3D" parent="BoardDemoCharacter" index="3"]
+transform = Transform3D(-1, -8.74228e-08, 3.82137e-15, 0, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, 0, 0, 0)
+
+[node name="AceSprite3D" parent="BoardDemoCharacter" index="5"]
+defaultAnimation = ""
+
+[node name="Body" parent="BoardDemoCharacter/AceSprite3D/Sprites" index="0"]
+material_override = SubResource("ShaderMaterial_dd0ex")
+billboard = 1
+shaded = true
+alpha_cut = 1
+texture_filter = 0
+texture = SubResource("CompressedTexture2D_l8fx7")
+hframes = 13
+vframes = 54
+
+[node name="Eyes" parent="BoardDemoCharacter/AceSprite3D/Sprites" index="1"]
+sorting_offset = 1.0
+material_override = SubResource("ShaderMaterial_l8jg3")
+billboard = 1
+shaded = true
+alpha_cut = 1
+texture_filter = 0
+render_priority = 1
+texture = SubResource("CompressedTexture2D_meo6s")
+hframes = 13
+vframes = 21
+
+[node name="Hair" parent="BoardDemoCharacter/AceSprite3D/Sprites" index="2"]
+sorting_offset = 2.0
+material_override = SubResource("ShaderMaterial_5yost")
+billboard = 1
+shaded = true
+alpha_cut = 1
+texture_filter = 0
+render_priority = 2
+texture = SubResource("CompressedTexture2D_w6op7")
+hframes = 13
+vframes = 21
+
+[node name="AnimationPlayer" parent="BoardDemoCharacter/AceSprite3D" index="2"]
+autoplay = "AceSprite3D/Walk North"
+
+[editable path="AceBoardGenerator"]
+[editable path="AceBoardGenerator/AceCameraManager"]
+[editable path="AceBoardGenerator/SpaceEditor"]
+[editable path="AceBoardGenerator/AceCameraDefaultDolly"]
+[editable path="AceBoardGenerator/AceCameraDefaultDolly/Elevation/AceCamera3D"]
+[editable path="BoardDemoCharacter"]
+[editable path="BoardDemoCharacter/AceSprite3D"]

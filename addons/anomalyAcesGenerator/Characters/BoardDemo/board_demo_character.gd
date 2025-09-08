@@ -9,12 +9,11 @@ class_name BoardDemoCharacter extends AceCharacter3D
 
 
 @onready var raycast: RayCast3D = $RayCast3D
-@onready var camera_3d: Camera3D = $Camera3D
 
 
 
 func _ready() -> void:
-	pass
+	super._ready()
 
 func _process(delta: float) -> void:
 	#Handle Directional Code

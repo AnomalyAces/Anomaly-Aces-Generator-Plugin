@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://60hgaq0k2wo4"]
+[gd_scene load_steps=34 format=3 uid="uid://60hgaq0k2wo4"]
 
 [ext_resource type="Script" uid="uid://br75vfv7jqqft" path="res://addons/anomalyAcesGenerator/BoardGenerator/ace_board_generator.gd" id="1_8srbc"]
 [ext_resource type="MeshLibrary" uid="uid://b73mng2enmwun" path="res://Scenes/GameScene/SubScene/MeshLibrary/MeshLibrary.tres" id="2_a30kb"]
@@ -10,25 +10,13 @@
 [ext_resource type="PackedScene" uid="uid://bkfty13ihespr" path="res://addons/anomalyAcesGenerator/BoardGenerator/editors/SpaceEditor/SpaceEditor.tscn" id="7_wlttv"]
 [ext_resource type="Script" uid="uid://wt5xl0ydoegl" path="res://addons/anomalyAcesGenerator/BoardGenerator/resources/region_prop.gd" id="8_m55yq"]
 [ext_resource type="Script" uid="uid://b2vt55kv6yjfr" path="res://addons/anomalyAcesGenerator/BoardGenerator/scenes/NavigationScenes/BoardNavigationController/board_navigation_controller.gd" id="9_f5t12"]
-[ext_resource type="PackedScene" uid="uid://sbwywnr30fp5" path="res://addons/anomalyAcesGenerator/Characters/BoardDemo/BoardDemoCharacter.tscn" id="10_iym0q"]
-[ext_resource type="MeshLibrary" uid="uid://ccrqounopfmf" path="res://addons/anomalyAcesGenerator/MeshLibrary/MeshLibrary.tres" id="10_t3v11"]
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jablh"]
-sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
-ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
-
-[sub_resource type="Sky" id="Sky_f5t12"]
-sky_material = SubResource("ProceduralSkyMaterial_jablh")
-
-[sub_resource type="Environment" id="Environment_iym0q"]
-background_mode = 2
-sky = SubResource("Sky_f5t12")
-tonemap_mode = 2
-glow_enabled = true
+[ext_resource type="PackedScene" uid="uid://ilhvsj7bb3rl" path="res://addons/anomalyAcesCamera/AceCameraDolly/AceCameraDefaultDolly/AceCameraDefaultDolly.tscn" id="13_2yep5"]
+[ext_resource type="PackedScene" uid="uid://cwilq1mr1x23e" path="res://addons/anomalyAcesCamera/AceCameraManager/AceCameraManager.tscn" id="13_dh1di"]
 
 [sub_resource type="Resource" id="Resource_2qk1i"]
 script = ExtResource("2_xtm7o")
 name = "NormalSpace"
+displayName = "Normal Space"
 description = "Triggers random event"
 
 [sub_resource type="Resource" id="Resource_en5gw"]
@@ -37,6 +25,7 @@ isRegional = false
 isSingleton = true
 percentage = 0
 name = "DivinerHQ"
+displayName = "Diviner HQ"
 description = "Complete Quests. Change Jobs."
 
 [sub_resource type="Resource" id="Resource_yl1in"]
@@ -45,6 +34,7 @@ isRegional = true
 isSingleton = false
 percentage = 0
 name = "InnSpace"
+displayName = "Inn Space"
 description = "A place to recover"
 
 [sub_resource type="Resource" id="Resource_rwje2"]
@@ -53,6 +43,7 @@ isRegional = true
 isSingleton = false
 percentage = 0
 name = "MagicShopSpace"
+displayName = "Magic Shop Space"
 description = "Purchase items here"
 
 [sub_resource type="Resource" id="Resource_ym0f8"]
@@ -61,6 +52,7 @@ isRegional = true
 isSingleton = false
 percentage = 0
 name = "WeaponShopSpace"
+displayName = "Weapon Shop Space"
 description = "Purchase equipment here"
 
 [sub_resource type="Resource" id="Resource_t3v11"]
@@ -114,6 +106,7 @@ metadata/_custom_type_script = "uid://cvvuaol4ab83t"
 [sub_resource type="Resource" id="Resource_oqiq5"]
 script = ExtResource("2_xtm7o")
 name = "Grass"
+displayName = ""
 description = "Grass 1"
 
 [sub_resource type="Resource" id="Resource_2s5u7"]
@@ -128,6 +121,7 @@ propList = Array[ExtResource("8_m55yq")]([])
 [sub_resource type="Resource" id="Resource_j5w1h"]
 script = ExtResource("2_xtm7o")
 name = "Snow"
+displayName = ""
 description = "Snow"
 
 [sub_resource type="Resource" id="Resource_wwjqx"]
@@ -142,6 +136,7 @@ propList = Array[ExtResource("8_m55yq")]([])
 [sub_resource type="Resource" id="Resource_dukce"]
 script = ExtResource("2_xtm7o")
 name = "Lava"
+displayName = ""
 description = "Lava"
 
 [sub_resource type="Resource" id="Resource_ujoey"]
@@ -156,6 +151,7 @@ propList = Array[ExtResource("8_m55yq")]([])
 [sub_resource type="Resource" id="Resource_nyi0q"]
 script = ExtResource("2_xtm7o")
 name = "Swamp"
+displayName = ""
 description = "Swamp"
 
 [sub_resource type="Resource" id="Resource_1wbo3"]
@@ -170,6 +166,7 @@ propList = Array[ExtResource("8_m55yq")]([])
 [sub_resource type="Resource" id="Resource_cu6l5"]
 script = ExtResource("2_xtm7o")
 name = "Thunder"
+displayName = ""
 description = "Thunder"
 
 [sub_resource type="Resource" id="Resource_tmvh5"]
@@ -184,6 +181,7 @@ propList = Array[ExtResource("8_m55yq")]([])
 [sub_resource type="Resource" id="Resource_77smy"]
 script = ExtResource("2_xtm7o")
 name = "Cloud"
+displayName = ""
 description = "Cloud"
 
 [sub_resource type="Resource" id="Resource_a4gbn"]
@@ -195,19 +193,15 @@ minProps = 0
 maxProps = 0
 propList = Array[ExtResource("8_m55yq")]([])
 
-[node name="AceBoardGenerator" type="Node3D" node_paths=PackedStringArray("spaceEditor", "regionEditor", "buildingEditor")]
+[node name="AceBoardGenerator" type="Node3D" node_paths=PackedStringArray("cameraManager", "cameraDolly")]
 script = ExtResource("1_8srbc")
 meshLibrary = ExtResource("2_a30kb")
-spaceEditor = NodePath("SpaceEditor")
-regionEditor = NodePath("RegionEditor")
-buildingEditor = NodePath("SpaceEditor/BuildingEditor")
+cameraManager = NodePath("AceCameraManager")
+cameraDolly = NodePath("AceCameraDefaultDolly")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_iym0q")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
-shadow_enabled = true
+[node name="AceCameraManager" parent="." node_paths=PackedStringArray("playerCameras3D", "gridMapCamera") instance=ExtResource("13_dh1di")]
+playerCameras3D = [null]
+gridMapCamera = NodePath("../AceCameraDefaultDolly/Elevation/AceCamera3D")
 
 [node name="SpaceEditor" parent="." instance=ExtResource("7_wlttv")]
 environmentTileIndices = Array[int]([0, 1, 2, 3, 4, 5])
@@ -225,9 +219,8 @@ mapHeight = 2
 subRegionOffset = 2
 regions = Array[ExtResource("7_tglrv")]([SubResource("Resource_2s5u7"), SubResource("Resource_wwjqx"), SubResource("Resource_ujoey"), SubResource("Resource_1wbo3"), SubResource("Resource_tmvh5"), SubResource("Resource_a4gbn")])
 
-[node name="Navigation" type="Node3D" parent="." node_paths=PackedStringArray("player", "gridMap", "spaceEditor", "regionEditor")]
+[node name="Navigation" type="Node3D" parent="." node_paths=PackedStringArray("gridMap", "spaceEditor", "regionEditor")]
 script = ExtResource("9_f5t12")
-player = NodePath("../BoardDemoCharacter")
 gridMap = NodePath("../GridMap")
 spaceEditor = NodePath("../SpaceEditor")
 regionEditor = NodePath("../RegionEditor")
@@ -238,18 +231,16 @@ metadata/_custom_type_script = "uid://b2vt55kv6yjfr"
 mesh_library = ExtResource("2_a30kb")
 cell_size = Vector3(1, 1, 1)
 
-[node name="GridMap" type="GridMap" parent="GridMap"]
-mesh_library = ExtResource("10_t3v11")
-cell_size = Vector3(1, 1, 1)
-
-[node name="BoardDemoCharacter" parent="." node_paths=PackedStringArray("gridMap", "spaceEditor") instance=ExtResource("10_iym0q")]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 2.5, 1, 2.5)
-tileMapOffset = Vector3(0.5, 0, 0.5)
-movement_mode = 1
-gridMap = NodePath("../GridMap")
-spaceEditor = NodePath("../SpaceEditor")
-
 [node name="Obstacles" type="Node3D" parent="."]
 
+[node name="AceCameraDefaultDolly" parent="." node_paths=PackedStringArray("gridMap") instance=ExtResource("13_2yep5")]
+gridMap = NodePath("../GridMap")
+minZoom = 5
+
+[node name="CameraHost" parent="AceCameraDefaultDolly/Elevation/AceCamera3D" index="0"]
+physics_interpolation_mode = 1
+
+[editable path="AceCameraManager"]
 [editable path="SpaceEditor"]
-[editable path="BoardDemoCharacter"]
+[editable path="AceCameraDefaultDolly"]
+[editable path="AceCameraDefaultDolly/Elevation/AceCamera3D"]

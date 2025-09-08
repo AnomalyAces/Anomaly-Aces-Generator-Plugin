@@ -10,20 +10,29 @@ enum CARDINAL { ## Enum for Cardinal Directions
 }
 
 
-@export var player: AceCharacter3D
-@export var gridMap: GridMap
-## How frequently spaces are vistied in navigation
-@export var space_freq: int = 2
+@export var player: AceCharacter3D :
+	set(p_player):
+		if p_player != player:
+			player = p_player
+			update_configuration_warnings()
+@export var gridMap: GridMap :
+	set(p_map):
+		if p_map != gridMap:
+			gridMap = p_map
+			update_configuration_warnings()
+
 @export_group("Editors")
 ## Configures Spaces and Buildings
-@export var spaceEditor: SpaceEditor
+@export var spaceEditor: SpaceEditor :
+	set(p_spaceEditor):
+		if p_spaceEditor != spaceEditor:
+			spaceEditor = p_spaceEditor
+			update_configuration_warnings()
 @export var regionEditor: RegionEditor : 
 	set(p_regionEditor):
-		print("Region Editor updated")
-		#if regionEditor != null && regionEditor.editor_updated.is_connected(_region_editor_updated):
-			#regionEditor.editor_updated.disconnect(_region_editor_updated)
-		regionEditor = p_regionEditor
-		#regionEditor.editor_updated.connect(_region_editor_updated)
+		if p_regionEditor != regionEditor:
+			regionEditor = p_regionEditor
+			update_configuration_warnings()
 @export_group("Debug")
 ## Draws a visual representation of the navigation with cubes that denote spaces that have connections
 @export var draw_nav_cubes: bool = false
@@ -42,6 +51,20 @@ var conn_material = StandardMaterial3D.new()
 ## Material used to show cube when space has been disabled because of an obstacle
 var disabled_material = StandardMaterial3D.new()
 
+
+func _get_configuration_warnings() -> PackedStringArray:
+	var warnings: PackedStringArray
+	
+	if player == null:
+		warnings.append("Player of type AceCharacter3D Not Defined")
+	if gridMap == null:
+		warnings.append("Grid Map of type GridMap AceCameraManager Not Defined")
+	if spaceEditor == null:
+		warnings.append("Space Editor of type SpaceEditor Not Defined")
+	if regionEditor == null:
+		warnings.append("Region Editor of type Region Editor Not Defined")
+	
+	return warnings
 
 ## Build A Star Navigaton 
 func build_navigation():
@@ -156,18 +179,7 @@ func _connect_points(point: Vector3i):
 
 ## Get list of space indexes that are passable by the player
 func _get_passable_space_indexes() -> Array[int] :
-	var passable_spaces: Array[int] = []
-	# Add the normal spaces
-	passable_spaces.append(BoardGeneratorGridUtil.getIndexByName(gridMap,spaceEditor.normalSpace))
-	# Add Special Spaces
-	var special_spaces: Array[int] = []
-	special_spaces.assign(spaceEditor.specialSpaceEditor.specialSpaces.map(
-			func(space:SpecialSpace): return BoardGeneratorGridUtil.getIndexByName(gridMap,space)
-		) 
-	)
-	passable_spaces.append_array(special_spaces)
-	
-	return passable_spaces
+	return BoardGeneratorGridUtil.get_passable_space_indexes(gridMap, spaceEditor)
 	
 
 ## Recursive function to find point connections at each count value up until the target count value
@@ -213,6 +225,8 @@ func _create_nav_cube(pos: Vector3):
 		var cube: MeshInstance3D = MeshInstance3D.new()
 		cube.mesh = cube_mesh
 		cube.material_override = no_conn_material
+		#Set the transparency so that the sprites will be rendered on top of them
+		cube.transparency = 0.25
 		add_child(cube)
 		#Set the position y to 1 so its on top of the grid
 		pos.y = 1
