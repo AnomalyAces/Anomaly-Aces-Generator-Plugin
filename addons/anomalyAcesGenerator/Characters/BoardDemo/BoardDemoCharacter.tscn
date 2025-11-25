@@ -151,6 +151,7 @@ follow_target = NodePath("..")
 
 [node name="AceSprite3D" parent="." instance=ExtResource("4_nbp3d")]
 spriteData = Array[ExtResource("6_r8ybi")]([SubResource("Resource_et5qv"), SubResource("Resource_k7uxx"), SubResource("Resource_3nkyy")])
+defaultAnimation = ""
 
 [node name="Body" parent="AceSprite3D/Sprites" index="0"]
 material_override = SubResource("ShaderMaterial_r8ybi")

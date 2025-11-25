@@ -66,7 +66,7 @@ func set_seed(val:String)->void:
 
 #Helper functions
 func generate():
-	print("generating room...")
+	AceLog.printLog(["generating room..."])
 	rooms.clear()
 	if !custom_seed.is_empty():
 		set_seed(custom_seed) 
@@ -88,7 +88,7 @@ func _initialize_grid_map(cell_sz: Vector3i, mesh_lib: MeshLibrary):
 func _generate_next_rooms(room: Room = null):
 	var rooms_to_create: int = clamp(randi_range(1,4), 1, (number_of_rooms - rooms.size()) )
 	var directions: Array[String] 
-	print("Generating Room and Next %s room neighbors at random..." % rooms_to_create)
+	AceLog.printLog(["Generating Room and Next %s room neighbors at random..." % rooms_to_create])
 	
 	var start_pos: Vector3i
 	
@@ -102,7 +102,7 @@ func _generate_next_rooms(room: Room = null):
 		start_pos = room.tiles.front()
 		
 		if room.neighbors_generated:
-			print("Room %s has already generated neighbors" % room.id)
+			AceLog.printLog(["Room %s has already generated neighbors" % room.id])
 			return
 	
 	directions = _filter_room_directions(room)
@@ -112,11 +112,11 @@ func _generate_next_rooms(room: Room = null):
 			break
 		var dir: String = directions.pick_random()
 		directions.erase(dir)
-		print("Direction Selected: %s" % dir)
+		AceLog.printLog(["Direction Selected: %s" % dir])
 		var dir_pos: Vector3i = start_pos + (Vector3i(max_room_size+room_margin,0,max_room_size+room_margin ) * AceGeneratorConstants.DIRECTIONS.get(dir))
 		
 		if grid_map.get_cell_item(dir_pos) == ROOM_TILE:
-			print("Position %s already contains a room" % dir_pos)
+			AceLog.printLog(["Position %s already contains a room" % dir_pos])
 			continue
 		
 		match dir:
@@ -149,7 +149,7 @@ func _generate_next_rooms(room: Room = null):
 				_place_room_door(e_room, "w")
 				rooms.append(e_room)
 			_:
-				print("Direction %s not supoorted" % dir )
+				AceLog.printLog(["Direction %s not supoorted" % dir ])
 	
 	room.neighbors_generated = true
 	room_mesh.update_dungeon()
@@ -174,15 +174,15 @@ func _filter_room_directions(room: Room) -> Array[String]:
 				if room.west_room != null:
 					temp_array.erase(dir)
 			_:
-				push_warning("Direction %s not supported" % dir)
+				AceLog.printLog(["Direction %s not supported" % dir], AceLog.LOG_LEVEL.WARN)
 	directions.append_array(temp_array)
 	return directions
 
 func _get_start_pos(character: AceCharacter3D) -> Vector3i:	
 	var map_position = grid_map.local_to_map(character.position)
 	
-	print("Character Position: %s" % character.position)
-	print("Map Position: %s" % map_position)
+	AceLog.printLog(["Character Position: %s" % character.position])
+	AceLog.printLog(["Map Position: %s" % map_position])
 	var curr_room: Room = _get_current_room(character)
 	
 	return curr_room.tiles.front()
@@ -192,8 +192,8 @@ func _get_start_pos(character: AceCharacter3D) -> Vector3i:
 func _get_current_room(character: AceCharacter3D) -> Room:
 	var map_position = grid_map.local_to_map(character.position)
 	
-	print("Character Position: %s" % character.position)
-	print("Map Position: %s" % map_position)
+	AceLog.printLog(["Character Position: %s" % character.position])
+	AceLog.printLog(["Map Position: %s" % map_position])
 	
 	var curr_room: Room
 	
@@ -268,7 +268,7 @@ func _move_to_north_room():
 	room_door.y = ceili(player.position.y)
 	var door_local_pos = grid_map.map_to_local(room_door)
 	player.position = Vector3(door_local_pos.x,player.position.y, door_local_pos.z) + Vector3.FORWARD
-	print("Moving to north room: %s" % player.position)
+	AceLog.printLog(["Moving to north room: %s" % player.position])
 	
 
 func _move_to_south_room():
@@ -280,7 +280,7 @@ func _move_to_south_room():
 	room_door.y = ceili(player.position.y)
 	var door_local_pos = grid_map.map_to_local(room_door)
 	player.position = Vector3(door_local_pos.x,player.position.y, door_local_pos.z) + Vector3.BACK
-	print("Moving to south room: %s" % player.position)
+	AceLog.printLog(["Moving to south room: %s" % player.position])
 
 func _move_to_east_room():
 	var curr_room = _get_current_room(player)
@@ -290,7 +290,7 @@ func _move_to_east_room():
 	var room_door: Vector3i = AceArrayUtil.findFirst(curr_room.east_room.tiles, find_east_room_door)
 	var door_local_pos = grid_map.map_to_local(room_door)
 	player.position = Vector3(door_local_pos.x,player.position.y, door_local_pos.z) + Vector3.RIGHT
-	print("Moving to east room: %s" % player.position)
+	AceLog.printLog(["Moving to east room: %s" % player.position])
 
 func _move_to_west_room():
 	var curr_room = _get_current_room(player)
@@ -301,4 +301,4 @@ func _move_to_west_room():
 	room_door.y = ceili(player.position.y)
 	var door_local_pos = grid_map.map_to_local(room_door)
 	player.position = Vector3(door_local_pos.x,player.position.y, door_local_pos.z) + Vector3.LEFT
-	print("Moving to west room: %s" % player.position)
+	AceLog.printLog(["Moving to west room: %s" % player.position])

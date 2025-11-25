@@ -144,29 +144,22 @@ func _unhandled_input(event: InputEvent) -> void:
 		var map_loc: Vector3i = gridMap.local_to_map(character.position)
 		var region: Region = _find_region(regionEditor.regions, map_loc.x, map_loc.z)
 		var random_cell:= Vector3i.ZERO
-		
 		while gridMap.get_cell_item(random_cell) != gridMap.mesh_library.find_item_by_name(spaceEditor.normalSpace.name):
 			random_cell.x = randi_range(region.space_height_range.x, region.space_height_range.y)
 			random_cell.z = randi_range(region.space_width_range.x, region.space_width_range.y)
-		
-		
-		print("Character starting Pos: %s" % character.position)
-		print("Chosen cell: %s" % random_cell)
-		
+		AceLog.printLog(["Character starting Pos: %s" % character.position])
+		AceLog.printLog(["Chosen cell: %s" % random_cell])
 		#var cell_loc = gridMap.map_to_local(random_cell)
 		#print("Local cell location: %s" % cell_loc)
 		var path: Array[Vector3i] = navigation.find_path(random_cell)
-		print("path(%d): %s " % [path.size(),JSON.stringify(path)] )
+		AceLog.printLog(["path(%d): %s " % [path.size(),JSON.stringify(path)]])
 		character.update_path(path)
-		print("navigation done")
-	
+		AceLog.printLog(["navigation done"])
 	if event.is_action_pressed("roll"):
 		var count: int = randi_range(2, 12)
-		print("Path by count dictionary | count %d " % count)
+		AceLog.printLog(["Path by count dictionary | count %d " % count])
 		var count_dict: Dictionary[int, BoardNavigationController.CountPathDictionaryObject] = navigation.find_paths_by_count(count)
-		
-		print(JSON.stringify(count_dict, "\t"))
-	
+		AceLog.printLog([JSON.stringify(count_dict, "\t")])
 	if event.is_action_pressed("obstacle"):
 		var space: Vector3i = Vector3i(4,0,2)
 		#Hard code an obstable to see if it get avoided
@@ -181,12 +174,12 @@ func _unhandled_input(event: InputEvent) -> void:
 
 ## Handles when the coordinates in the viewport change
 func _on_viewport_change(minCoordIntersection: ViewportWorldIntersection3D, maxCoordIntersection: ViewportWorldIntersection3D) -> void:
-	print("--- VIEWPORT CHANGE ---")
-	print("minCoordIntersection: %s" % ["null" if minCoordIntersection.is_empty() else minCoordIntersection.position ])
-	print("minCoordIntersection Target: %s" % ["null" if minCoordIntersection.is_empty() || minCoordIntersection.collider == null  else minCoordIntersection.collider.name] )
-	print("maxCoordIntersection: %s" % ["null" if maxCoordIntersection.is_empty() else maxCoordIntersection.position] )
-	print("maxCoordIntersection Target: %s" % ["null" if maxCoordIntersection.is_empty()  || maxCoordIntersection.collider == null  else maxCoordIntersection.collider.name] )
-	print("----------------------")
+	AceLog.printLog(["--- VIEWPORT CHANGE ---"])
+	AceLog.printLog(["minCoordIntersection: %s" % ["null" if minCoordIntersection.is_empty() else minCoordIntersection.position ]])
+	AceLog.printLog(["minCoordIntersection Target: %s" % ["null" if minCoordIntersection.is_empty() || minCoordIntersection.collider == null  else minCoordIntersection.collider.name] ])
+	AceLog.printLog(["maxCoordIntersection: %s" % ["null" if maxCoordIntersection.is_empty() else maxCoordIntersection.position] ])
+	AceLog.printLog(["maxCoordIntersection Target: %s" % ["null" if maxCoordIntersection.is_empty()  || maxCoordIntersection.collider == null  else maxCoordIntersection.collider.name] ])
+	AceLog.printLog(["----------------------"])
 	
 	var minWorldCoord: Vector3 = _min_grid_coord if minCoordIntersection.is_empty() else minCoordIntersection.position
 	var maxWorldCoord: Vector3 = _max_grid_coord if maxCoordIntersection.is_empty() else maxCoordIntersection.position
@@ -194,14 +187,12 @@ func _on_viewport_change(minCoordIntersection: ViewportWorldIntersection3D, maxC
 	var minGridCoord: Vector3i = gridMap.local_to_map(minWorldCoord.round())
 	var maxGridCoord: Vector3i = gridMap.local_to_map(maxWorldCoord.round())
 
-	print("--- GRID MAP SPACES IN VIEW ---")
-	print("Min Coord: %s" % minGridCoord)
-	print("Max Coord: %s" % maxGridCoord)
+	AceLog.printLog(["--- GRID MAP SPACES IN VIEW ---"])
+	AceLog.printLog(["Min Coord: %s" % minGridCoord])
+	AceLog.printLog(["Max Coord: %s" % maxGridCoord])
 	var spaces_in_view: Array[BoardGeneratorGridUtil.GridPOI] = _get_spaces_in_viewport(minGridCoord, maxGridCoord)
 	viewport_changed.emit(spaces_in_view)
-	print("-------------------------------")
-
-
+	AceLog.printLog(["-------------------------------"])
 
 func _on_camera_mode_changed(cameraMode: AceCameraManager.CAMERA_MODE) -> void:
 	camera_mode_changed.emit(cameraMode)
@@ -335,15 +326,15 @@ func _place_special_spaces():
 	randomize()
 	var normal_places_arr: Array[Vector3i] = BoardGeneratorGridUtil.getSpacesByName(gridMap, spaceEditor.normalSpace)
 	normal_places_arr.shuffle()
-	print("Normal Spaces Placed:  %s" % normal_places_arr.size())
+	AceLog.printLog(["Normal Spaces Placed:  %s" % normal_places_arr.size()])
 	
 	#Place Singletons
 	_place_singleton_special_spaces(normal_places_arr)
-	print("Normal Spaces After Singleton Spaces:  %s" % normal_places_arr.size())
+	AceLog.printLog(["Normal Spaces After Singleton Spaces:  %s" % normal_places_arr.size()])
 	
 	#Place Regionals
 	_place_regional_special_spaces(normal_places_arr)
-	print("Normal Spaces After Regional Spaces:  %s" % normal_places_arr.size())
+	AceLog.printLog(["Normal Spaces After Regional Spaces:  %s" % normal_places_arr.size()])
 	
 	
 
@@ -360,7 +351,7 @@ func _place_regional_special_spaces(normal_spaces: Array[Vector3i]):
 	var region_dict: Dictionary[int, Variant] = {}
 	var regions: Array[Region] = regionEditor.regions.duplicate()
 	
-	print("Regional Spaces: %s" % JSON.stringify(regional_spaces, "\t"))
+	AceLog.printLog(["Regional Spaces: %s" % JSON.stringify(regional_spaces, "\t")])
 	
 	var spaces_to_return: Array[Vector3i] = []
 	
@@ -372,7 +363,7 @@ func _place_regional_special_spaces(normal_spaces: Array[Vector3i]):
 		#Loop through regions and find which region contains target space
 		for region in regions:
 			if _is_in_region(region, target_space.x, target_space.z):
-				print("Region UID: %d  Region Environment Space %s" % [region.id, region.environmentSpace.name])
+				AceLog.printLog(["Region UID: %d  Region Environment Space %s" % [region.id, region.environmentSpace.name]])
 				var region_space_arr: Array[Vector3i]
 				if region_dict.has(region.id):
 					region_space_arr = region_dict.get(region.id) as Array[Vector3i]
@@ -392,7 +383,7 @@ func _place_regional_special_spaces(normal_spaces: Array[Vector3i]):
 			if region_dict.get(region_id).size() == regional_spaces.size():
 				var region_to_remove: Region =  AceArrayUtil.findFirst(regions, func(region:Region): return region.id == region_id)
 				if region_to_remove != null:
-					print("Removing Region UID: %d  Region Environment Space %s" % [region_to_remove.id, region_to_remove.environmentSpace.name])
+					AceLog.printLog(["Removing Region UID: %d  Region Environment Space %s" % [region_to_remove.id, region_to_remove.environmentSpace.name]])
 					regions.erase(region_to_remove)
 	
 	
@@ -426,7 +417,7 @@ func _place_buildings():
 	var building_arr: Array[Building] = spaceEditor.buildingEditor.buildings
 	
 	for building in building_arr:
-		print("Placing %s building" % building.buildingName)
+		AceLog.printLog(["Placing %s building" % building.buildingName])
 		var building_spaces: Array[Vector3i] = gridMap.get_used_cells_by_item(building.spaceIndex)
 		
 		for space in building_spaces:
@@ -440,23 +431,23 @@ func _get_building_space(target: Vector3i, building_tile_id: int):
 	var south = target + Vector3i(Vector2i.DOWN.x, 0, Vector2i.DOWN.y)
 	
 	if(gridMap.get_cell_item(north) <= 5 && gridMap.get_cell_item(north) > gridMap.INVALID_CELL_ITEM):
-		print("Building Space: %s" % target)
-		print("Placing Building: %s" % north)
+		AceLog.printLog(["Building Space: %s" % target])
+		AceLog.printLog(["Placing Building: %s" % north])
 		gridMap.set_cell_item(Vector3i(north.x, 1, north.z), building_tile_id, Enum.Orientation3D.ROTATE_Y_180)
 		return
 	if(gridMap.get_cell_item(east)  <= 5 && gridMap.get_cell_item(east) > gridMap.INVALID_CELL_ITEM):
-		print("Building Space: %s" % target)
-		print("Placing Building: %s" % east)
+		AceLog.printLog(["Building Space: %s" % target])
+		AceLog.printLog(["Placing Building: %s" % east])
 		gridMap.set_cell_item(Vector3i(east.x, 1, east.z), building_tile_id, Enum.Orientation3D.ROTATE_Y_270)
 		return
 	if(gridMap.get_cell_item(west) <= 5 && gridMap.get_cell_item(west) > gridMap.INVALID_CELL_ITEM):
-		print("Building Space: %s" % target)
-		print("Placing Building: %s" % west)
+		AceLog.printLog(["Building Space: %s" % target])
+		AceLog.printLog(["Placing Building: %s" % west])
 		gridMap.set_cell_item(Vector3i(west.x, 1, west.z), building_tile_id, Enum.Orientation3D.ROTATE_Y_90)
 		return
 	if(gridMap.get_cell_item(south) <= 5 && gridMap.get_cell_item(south) > gridMap.INVALID_CELL_ITEM):
-		print("Building Space: %s" % target)
-		print("Placing Building: %s" % south)
+		AceLog.printLog(["Building Space: %s" % target])
+		AceLog.printLog(["Placing Building: %s" % south])
 		gridMap.set_cell_item(Vector3i(south.x, 1, south.z), building_tile_id, Enum.Orientation3D.ROTATE_Y_0)
 		return
 	

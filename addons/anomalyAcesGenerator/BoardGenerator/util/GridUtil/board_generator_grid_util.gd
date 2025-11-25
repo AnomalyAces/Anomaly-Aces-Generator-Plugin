@@ -27,7 +27,7 @@ static func setSpaceByName(grid: GridMap, space: Space, pos: Vector3i, orientati
 		grid.set_cell_item(pos,idx,orientation)
 		return true
 	else:
-		push_warning("Space %s does not match a space name in the mesh library" % space.name)
+		AceLog.printLog(["Space %s does not match a space name in the mesh library" % space.name], AceLog.LOG_LEVEL.WARN)
 		return false
 
 static func getIndexBySpace(grid: GridMap, space: Space) -> int :
@@ -38,7 +38,7 @@ static func getSpacesByName(grid: GridMap, space: Space) -> Array[Vector3i]:
 	if idx != 1:
 		return grid.get_used_cells_by_item(idx)
 	else:
-		push_warning("Space %s does not match a space name in the mesh library" % space.name)
+		AceLog.printLog(["Space %s does not match a space name in the mesh library" % space.name], AceLog.LOG_LEVEL.WARN)
 		return []
 
 static func isLocationDefinedSpace(pos: Vector3, grid: GridMap, spaceEditor:SpaceEditor) -> bool:

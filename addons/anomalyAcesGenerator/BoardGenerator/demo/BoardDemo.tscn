@@ -69,9 +69,6 @@ spaceEditor = NodePath("../AceBoardGenerator/SpaceEditor")
 [node name="RayCast3D" parent="BoardDemoCharacter" index="3"]
 transform = Transform3D(-1, -8.74228e-08, 3.82137e-15, 0, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, 0, 0, 0)
 
-[node name="AceSprite3D" parent="BoardDemoCharacter" index="5"]
-defaultAnimation = ""
-
 [node name="Body" parent="BoardDemoCharacter/AceSprite3D/Sprites" index="0"]
 material_override = SubResource("ShaderMaterial_dd0ex")
 billboard = 1

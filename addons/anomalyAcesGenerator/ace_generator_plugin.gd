@@ -11,7 +11,7 @@ func _enter_tree():
 		preload("res://addons/anomalyAcesGenerator/BoardGenerator/AceBoardGenerator.svg")
 	)
 	
-	print("AceBoardGenerator Entering Tree")
+	AceLog.printLog(["AceBoardGenerator Entering Tree"])
 	
 	add_custom_type(
 		"AceRoomGenerator", 
@@ -19,7 +19,7 @@ func _enter_tree():
 		preload("res://addons/anomalyAcesGenerator/RoomGenerator/ace_room_generator.gd"),
 		preload("res://addons/anomalyAcesGenerator/RoomGenerator/AceRoomGenerator.svg")
 	)
-	print("AceRoomGenerator Entering Tree")
+	AceLog.printLog(["AceRoomGenerator Entering Tree"])
 	
 	add_custom_type(
 		"AceDungeonGenerator", 
@@ -28,7 +28,7 @@ func _enter_tree():
 		preload("res://addons/anomalyAcesGenerator/DungeonGenerator/AceDungeonGenerator.svg")
 	)
 	
-	print("AceDungeonGenerator Entering Tree")
+	AceLog.printLog(["AceDungeonGenerator Entering Tree"])
 	
 	#Add Autoloads
 	#add_autoload_singleton("AceTableConstants", "res://addons/anomalyAcesTable/Scripts/Table/AceTableConstants.gd")

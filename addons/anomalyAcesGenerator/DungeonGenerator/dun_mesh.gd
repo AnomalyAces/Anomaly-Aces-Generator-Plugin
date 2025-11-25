@@ -19,7 +19,7 @@ var directions : Dictionary = {
 
 
 func _ready() -> void:
-	print("GridMap %s " % grid_map)
+	AceLog.printLog(["GridMap %s " % grid_map])
 
 
 #Setters

@@ -55,7 +55,7 @@ func set_seed(val:String)->void:
 
 #Helper functions
 func _visualize_border():
-	print("Border Size %s" % border_size)
+	AceLog.printLog(["Border Size %s" % border_size])
 	grid_map.clear()
 	for i in range(-1,border_size+1):
 		grid_map.set_cell_item(Vector3i(i, 0, -1), BORDER_TILE) #North
@@ -64,7 +64,7 @@ func _visualize_border():
 		grid_map.set_cell_item(Vector3i(-1, 0, i), BORDER_TILE) #West
 
 func generate():
-	print("generating room...")
+	AceLog.printLog(["generating room..."])
 	room_tiles.clear()
 	room_positions.clear()
 	if !custom_seed.is_empty():

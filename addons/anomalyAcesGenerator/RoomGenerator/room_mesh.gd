@@ -26,7 +26,7 @@ var directions : Dictionary = {
 
 
 func _ready() -> void:
-	print("GridMap %s " % grid_map)
+	AceLog.printLog(["GridMap %s " % grid_map])
 
 
 
@@ -50,10 +50,10 @@ func update_dungeon():
 		if cell_index <= DOOR_TILE && cell_index >= ROOM_TILE:
 			var room_cell: GeneratorCell = room_cell_scene.instantiate()
 			room_cell.door_type = room_door_type
-			print("Grid Map Pos %s" % cell)
-			print("Local Pos %s" % grid_map.map_to_local(cell))
+			AceLog.printLog(["Grid Map Pos %s" % cell])
+			AceLog.printLog(["Local Pos %s" % grid_map.map_to_local(cell)])
 			room_cell.position = grid_map.map_to_local(cell) + _get_grid_map_offset()
-			print("Local Pos Offset %s" % room_cell.position)
+			AceLog.printLog(["Local Pos Offset %s" % room_cell.position])
 			room_cell.connect("north_door_opened", _on_north_door_opened)
 			room_cell.connect("south_door_opened", _on_south_door_opened)
 			room_cell.connect("east_door_opened", _on_east_door_opened)

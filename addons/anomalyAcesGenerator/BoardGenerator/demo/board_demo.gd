@@ -13,14 +13,14 @@ func _ready() -> void:
 
 
 func _on_board_generated() -> void:
-	print("Board Generated")
+	AceLog.printLog(["Board Generated"])
 
 func _on_viewport_changed(spaces_in_view: Array[BoardGeneratorGridUtil.GridPOI]) -> void:
-	print("Spaces in View: %s" % JSON.stringify(spaces_in_view, "\t"))
+	AceLog.printLog(["Spaces in View: %s" % JSON.stringify(spaces_in_view, "\t")])
 
 func _on_camera_mode_changed(cameraMode: AceCameraManager.CAMERA_MODE) -> void:
-	print("--- CAMERA MODE CHANGE ---")
-	print("Camera Mode: %s" % AceCameraManager.CAMERA_MODE.keys()[cameraMode])
+	AceLog.printLog(["--- CAMERA MODE CHANGE ---"])
+	AceLog.printLog(["Camera Mode: %s" % AceCameraManager.CAMERA_MODE.keys()[cameraMode]])
 
 	## Enable / Disable the inputs for the camera dolly, select character, and the player depending on camera mode and turn player
 
